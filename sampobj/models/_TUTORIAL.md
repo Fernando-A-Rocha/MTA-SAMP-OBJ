@@ -2,7 +2,7 @@
 
 ## this is for using `AddSimpleModel` to load a custom object
 
-* use kdff [(download here)](sampobj/kdffgui.zip)
+* use kdff [(download here)](kdffgui.zip)
 * based on tutorial in RCRP forums [(here)](https://forum.redcountyrp.com/threads/adding-collisions-and-vertex-colors-to-models-using-kdff.199930/)
 * 1 - launch kdffgui.exe
 * 2 - import the dff using the dff button
