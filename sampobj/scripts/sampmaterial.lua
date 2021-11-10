@@ -61,7 +61,7 @@ function setObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
         local target_tex_name = getTextureNameFromIndex(object,mat_index)
         if target_tex_name ~= nil then 
             -- find the txd name we want to replaced
-            local matShader = dxCreateShader( "shader.fx" )
+            local matShader = dxCreateShader( "files/shader.fx" )
             local matTexture = getTextureFromName(model_id,tex_name)
             if matTexture ~= nil then
                 -- apply shader attributes

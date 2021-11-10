@@ -5,7 +5,7 @@
 
 local mapList = {
     -- {id=1, name="maps/test.pwn", int=1, dim=2, pos={1395.462891,-17.192383,1000.917358}},
-    {id=2, name="maps/office5.pwn", int=1, dim=2, pos={1928.840454, -342.064514, 51.41202}},
+    {id=2, name="maps/office5.pwn", int=1, dim=2, pos={1928.7041015625, -343.6083984375, 50.75}},
 }
 
 

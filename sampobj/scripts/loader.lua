@@ -4,12 +4,12 @@ MTAIDMapSAMPModel = {}
 local total = 0
 
 function loadSAMPObjects()
-    local img = engineLoadIMGContainer("samp/samp.img") -- returns object
+    local img = engineLoadIMGContainer("files/samp.img") -- returns object
     local cols = engineGetCOLsFromLibrary("samp/samp.col") -- returns array
 
 
-    if fileExists("samp/samp.ide") then 
-        local f = fileOpen("samp/samp.ide")
+    if fileExists("files/samp.ide") then 
+        local f = fileOpen("files/samp.ide")
         local str = fileRead(f,fileGetSize(f))
         fileClose(f)
         Lines = split(str,'\n' )

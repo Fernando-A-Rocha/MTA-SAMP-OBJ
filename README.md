@@ -10,29 +10,21 @@
 
 ### How to use
 
+* place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/maps)
 * **map.pwn** files in meta.xml under `<!-- samp maps -->`
-* custom model **dff + txd + col files** in meta.xml under `<!-- samp models -->`
-* list the **maps to load** in `map_loader.lua`
+* custom models **dff + txd + col** in meta.xml under `<!-- samp models -->`
+* list of **maps to load** in [maps/map_loader.lua](sampobj/maps/map_loader.lua)
 * useful **commands**: `/listmaps`, `/gotomap`, `/tdo` *(test draw objects)*
 
 ### Example Maps and Models
 
 * this resource comes with a few **test maps** that contain custom models for you to see how it works
 * check the `.pwn map files` and the `corresponding models` in the respective folders
-* they are loaded in `map_loader.lua`
+* they are loaded in [maps/map_loader.lua](sampobj/maps/map_loader.lua)
 
 ### How to generate a .col from a .dff file
 
-*  **this is for using `AddSimpleModel` to load a custom object**
-* use kdff [(download here)](https://www.mediafire.com/file/m0ej52v9agfo672/kdff_gui.rar/file)
-* based on tutorial in RCRP forums [here](https://forum.redcountyrp.com/threads/adding-collisions-and-vertex-colors-to-models-using-kdff.199930/)
-* 1 - launch kdffgui.exe
-* 2 - import the dff using the dff button
-* 3 - leave `Optimize` box checked then press `Make Col`
-    * Empty: no collision
-    * Box: simple box collision (very optimized)
-    * Mesh Faces: matches all polygons
-* 4 - you have your .col file! don't overwrite existing .dff like the tutorial suggests
+* tutorial [here](sampobj/models/_TUTORIAL.md)
 
 ### Exported functions
 

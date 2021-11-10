@@ -108,9 +108,6 @@ SetDynamicObjectMaterial(tmpobjid, 0, -1, "none", "none", 0xFFFFFFFF);
 tmpobjid = CreateDynamicObject(19560, 1927.635498, -349.483642, 52.283752, 90.000000, 360.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 SetDynamicObjectMaterial(tmpobjid, 1, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
-tmpobjid = CreateDynamicObject(19475, 1927.476928, -349.479858, 52.141258, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
-SetDynamicObjectMaterial(tmpobjid, 0, 8480, "csrspalace01", "black32", 0x00000000);
-SetDynamicObjectMaterialText(tmpobjid, 0, "BOSS", 130, "Ariel", 70, 1, 0xFFFFFFFF, 0x00000000, 0);
 tmpobjid = CreateDynamicObject(1703, 1924.666503, -353.245086, 49.667179, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 1, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(19174, 1927.491699, -358.488586, 51.973892, 0.000000, 0.000000, 180.000000, -1, -1, -1, 300.00, 300.00); 
@@ -275,12 +272,6 @@ tmpobjid = CreateDynamicObject(1547, 1926.438964, -347.556671, 50.237941, 90.000
 SetDynamicObjectMaterial(tmpobjid, 0, 14525, "imy_motel2", "mp_motel_reception", 0xFFFFFFFF);
 tmpobjid = CreateDynamicObject(1547, 1927.990356, -354.941131, 50.143886, 90.000000, 161.199920, 180.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 9683, "goldengate_sfw", "bridge_egg_sfw", 0xFFFFFFFF);
-tmpobjid = CreateDynamicObject(1547, 1928.070434, -354.987579, 50.175765, 90.000000, -23.300010, 0.000000, -1, -1, -1, 300.00, 300.00); 
-SetDynamicObjectMaterialText(tmpobjid, 0, "__", 20, "Ariel", 10, 0, 0xFFFFFFFF, 0x00000000, 1);
-tmpobjid = CreateDynamicObject(1547, 1928.060058, -354.992858, 50.178134, 90.000000, -25.100000, 0.000000, -1, -1, -1, 300.00, 300.00); 
-SetDynamicObjectMaterialText(tmpobjid, 0, "DOWN", 130, "Ariel", 25, 1, 0xFFFFFFFF, 0x00000000, 1);
-tmpobjid = CreateDynamicObject(19477, 1928.331420, -348.194915, 51.308631, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
-SetDynamicObjectMaterialText(tmpobjid, 0, "hello world", 130, "Ariel", 70, 1, 0xFFFF1111, 0x00000000, 1);
 tmpobjid = CreateDynamicObject(1431, 1928.870971, -348.638183, 50.261280, 0.000000, 0.000000, 10.600000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, -1, "none", "none", 0xFFFF6699);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
