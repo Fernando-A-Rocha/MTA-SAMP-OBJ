@@ -9,9 +9,21 @@
 
 ### How to use
 * **map.pwn** files in meta.xml under `<!-- samp maps -->`
-* custom model **dff + txd files** in meta.xml under `<!-- samp models -->`
+* custom model **dff + txd + col files** in meta.xml under `<!-- samp models -->`
 * list the **maps to load** in `map_loader.lua`
 * useful **commands**: `/listmaps`, `/gotomap`
+
+### How to generate a .col from a .dff file
+*  **this is for using `AddSimpleModel` to load a custom object**
+* use kdff [(download here)](https://www.mediafire.com/file/m0ej52v9agfo672/kdff_gui.rar/file)
+* based on tutorial in RCRP forums [here](https://forum.redcountyrp.com/threads/adding-collisions-and-vertex-colors-to-models-using-kdff.199930/)
+* 1 - launch kdffgui.exe
+* 2 - import the dff using the dff button
+* 3 - leave `Optimize` box checked then press `Make Col`
+    * Empty: no collision
+    * Box: simple box collision (very optimized)
+    * Mesh Faces: matches all polygons
+* 4 - you have your .col file! don't overwrite existing .dff like the tutorial suggests
 
 ### Exported functions
 
