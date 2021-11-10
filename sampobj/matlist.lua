@@ -6,10 +6,10 @@
 	- Project Sparrow 2021
 	-----------------------------------------------------
 	NOTE: All the dff & txd filenames were converted to 
-	lower case due to the snake of in-consistency namming 
+	lower case due to the snake of in-consistency naming 
 	in samp.ide files.
 	-----------------------------------------------------
-	Feel free to do you own modifications,but please do
+	Feel free to do you own modifications, but please do
 	credit on your modified code.
 ]]
 

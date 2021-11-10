@@ -1,37 +1,42 @@
-function getTxdNameFromIndex(object,mat_index)
+function getTextureNameFromIndex(object,mat_index)
     local mta_id = getElementModel(object)
-    local dff = nil
-    if MTAIDMapSAMPModel[tostring(mta_id)] ~= nil then -- if samp model
-        if MTAIDMapSAMPModel[tostring(mta_id)] ~= nil then 
-            local model = MTAIDMapSAMPModel[tostring(mta_id)].dff
+    local tex_name = nil
+    local model = ""
+    if MTAIDMapSAMPModel[mta_id] ~= nil then -- if samp model
+        if MTAIDMapSAMPModel[mta_id] ~= nil then 
+            model = MTAIDMapSAMPModel[mta_id].dff
             if SA_MATLIB[model..".dff"] ~= nil then
                 for idx,val in ipairs(SA_MATLIB[model..".dff"]) do
                     if val.index == mat_index then --
-                        dff = val.name
+                        tex_name = val.name
                     end
                 end
+            else
+                outputDebugString("(samp)"..model..".dff not in SA_MATLIB", 2)
             end
             
         end
     else -- normal SA object
-        local model = string.lower(engineGetModelNameFromID(mta_id))
+        model = string.lower(engineGetModelNameFromID(mta_id))
         if SA_MATLIB[model..".dff"] ~= nil then
             for idx,val in ipairs(SA_MATLIB[model..".dff"]) do
                 if val.index == mat_index then --
-                    dff = val.name
+                    tex_name = val.name
                 end
             end
+        else
+            outputDebugString(model..".dff not in SA_MATLIB", 2)
         end
     end
-    return dff
+    return tex_name
 end
-function getTextureFromTxdName(model_id,txdName)
-    if isSampObject(model_id) then -- if is samp model, we need to obtain the id allcated by the MTA
-        model_id = SAMPObjects[tostring(model_id)].malloc_id
+function getTextureFromName(model_id,tex_name)
+    if SAMPObjects[model_id] then -- if is samp model, we need to obtain the id allcated by the MTA
+        model_id = SAMPObjects[model_id].malloc_id
     end
-    local txds = engineGetModelTextures(model_id,txdName)
+    local txds = engineGetModelTextures(model_id,tex_name)
     for name,texture in pairs(txds) do
-        return texture
+        return texture, name
     end
     return nil
 end
@@ -50,13 +55,14 @@ function getColor(color)
     end 
 end
 
-function setObjectMaterial(object,mat_index,model_id,lib_name,txd_name,color)
+function setObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
+    --mta doesn't need lib_name (.txd file) to find texture by name
     if model_id ~= -1 then -- dealing replaced mat objects
-        local target_txd = getTxdNameFromIndex(object,mat_index)
-        if target_txd ~= nil then 
+        local target_tex_name = getTextureNameFromIndex(object,mat_index)
+        if target_tex_name ~= nil then 
             -- find the txd name we want to replaced
             local matShader = dxCreateShader( "shader.fx" )
-            local matTexture = getTextureFromTxdName(model_id,txd_name)
+            local matTexture = getTextureFromName(model_id,tex_name)
             if matTexture ~= nil then
                 -- apply shader attributes
                 --local a,r,g,b = getColor(color)
@@ -65,11 +71,19 @@ function setObjectMaterial(object,mat_index,model_id,lib_name,txd_name,color)
                 dxSetShaderValue ( matShader, "gColor", 1,1,1,1);
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
-                outputConsole(string.format( "[OBJ_MAT]: Error on model %d, req txd: %s,model_id: %d, mat_index: %d",getElementModel(object),txd_name,model_id,mat_index))
+                outputDebugString(string.format( "[OBJ_MAT] Error: getTextureFromName on model_id: %d and tex_name: %s", model_id,tex_name), 1)
             end
-            engineApplyShaderToWorldTexture (matShader,target_txd,object)
+            engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
+
+            local mat_info = getElementData(object, "material_info") or {}
+            table.insert(mat_info, {
+                mat_index = mat_index,
+                target_tex_name = target_tex_name,
+                tex_name = tex_name
+            })
+            setElementData(object, "material_info", mat_info)
         else
-            outputConsole(string.format( "[OBJ_MAT]: Error on model %d, req txd: %s,model_id: %d, mat_index: %d",getElementModel(object),txd_name,model_id,mat_index))
+            outputDebugString(string.format( "[OBJ_MAT] Error: getTextureNameFromIndex on model: %d, mat_index: %d", getElementModel(object),mat_index), 1)
         end
     end
 end

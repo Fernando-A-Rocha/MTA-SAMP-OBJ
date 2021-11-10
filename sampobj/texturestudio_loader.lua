@@ -1,4 +1,8 @@
-SAMP = exports.sampobj
+--[[
+    Original creator: gta191977649
+    Edited by: Fernando
+]]
+
 local Buffer ={
     last_object = nil,
     total = 0,
@@ -26,6 +30,10 @@ end
 function isWorldObjectRemovel(line)
     return string.contains(line,"RemoveBuildingForPlayer")
 end
+function isAddSimpleModel(line)
+    return string.contains(line, "AddSimpleModel")
+end
+
 function parseCreateObject(code)
     -- get rid of unused syntax
     code = string.gsub(code, "%(", "")
@@ -68,8 +76,7 @@ function parseRemoveBuildingForPlayer(code)
     code = string.gsub(code, "%(", "")
     code = string.gsub(code, "%)", "")
     code = string.gsub(code, ";", "")
-    code = string.gsub(code, "CreateObject", "")
-    code = string.gsub(code, "CreateDynamicObject", "")
+    code = string.gsub(code, "RemoveBuildingForPlayer", "")
     code = string.trim(code)
     local b = split(code,',')
 
@@ -80,6 +87,23 @@ function parseRemoveBuildingForPlayer(code)
     local rad = tonumber(b[6])
     return model, x, y, z, rad
 end
+function parseAddSimpleModel(code)
+    code = string.gsub(code, "%(", "")
+    code = string.gsub(code, "%)", "")
+    code = string.gsub(code, ";", "")
+    code = string.gsub(code, "AddSimpleModel", "")
+    code = string.trim(code)
+    local b = split(code,',')
+
+    local virtualworld = tonumber(b[1])
+    local baseid = tonumber(b[2])
+    local newid = tonumber(b[3])
+    local dffname = string.gsub(b[4], "\"", "")
+    local txdname = string.gsub(b[5], "\"", "")
+    return virtualworld, baseid, newid, dffname, txdname
+end
+
+
 function loadTextureStudioMap(filename,int,dim) 
     int = int or 0
     dim = dim or 0
@@ -94,18 +118,32 @@ function loadTextureStudioMap(filename,int,dim)
         for i = 1, #Lines do
             local line = Lines[i]
             if not isComment(line) then
+
+                local customModelFailed = nil
+                if isAddSimpleModel(line) then
+                    local virtualworld, baseid, newid, dffname, txdname = parseAddSimpleModel(line)
+                    if virtualworld then
+                        if not AddSimpleModel(virtualworld, baseid, newid, dffname, txdname) then
+                            customModelFailed = newid
+                        end
+                    end
+                end
                 if isCreateObject(line) then
                     local b = split(line,"=")
                     local model,x,y,z,rx,ry,rz,stream = parseCreateObject(b[2])
-                    Buffer.last_object = SAMP:createSAMPObject(model,x,y,z,rx,ry,rz)
-                    setElementInterior(Buffer.last_object,int)
-                    setElementDimension(Buffer.last_object,dim)
-                    Buffer.total = Buffer.total + 1
+                    if model and (customModelFailed and customModelFailed ~= model) or (not customModelFailed) then
+                        Buffer.last_object = createSAMPObject(model,x,y,z,rx,ry,rz)
+                        if isElement(Buffer.last_object) then
+                            setElementInterior(Buffer.last_object,int)
+                            setElementDimension(Buffer.last_object,dim)
+                            Buffer.total = Buffer.total + 1
+                        end
+                    end
                 end
                 if isSetMaterial(line) then 
                     local index,model,lib,txd,color = parseSetObjectMaterial(line)
-                    if Buffer.last_object ~= nil then 
-                        SAMP:setObjectMaterial(Buffer.last_object,index,model,lib,txd,color)
+                    if isElement(Buffer.last_object) then 
+                        setObjectMaterial(Buffer.last_object,index,model,lib,txd,color)
                     else
                         outputConsole(string.format("[OBJ_MAT]: Set %s on Error.",lib))
                     end
@@ -115,11 +153,11 @@ function loadTextureStudioMap(filename,int,dim)
                     removeWorldModel(model,radius,x,y,z,int)
                 end
             end
-            
         end
+    else
+        return false, filename.." doesn't exist"
     end
-    outputConsole(string.format("%s, Total Load: %d .",filename,Buffer.total))
+
     Buffer.total = 0
+    return true
 end
-loadTextureStudioMap("texturestudio_map/space.pwn",1,1) 
-loadTextureStudioMap("texturestudio_map/vw-house-int.pwn",1,1) 

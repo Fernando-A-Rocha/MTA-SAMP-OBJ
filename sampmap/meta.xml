@@ -1,6 +1,0 @@
-<meta>
-    <script type="client" src="loader/texturestudio_loader.lua"/>
-    <script type="client" src="loader/map_loader.lua"/>
-    <script type="client" src="sampmap.lua"/>
-    <file type="client" src="map/test.pwn"/>
-</meta>
