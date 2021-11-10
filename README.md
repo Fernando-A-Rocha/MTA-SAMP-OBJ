@@ -10,7 +10,7 @@
 
 ### How to use
 
-* place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/maps)
+* place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/models)
 * **map.pwn** files in meta.xml under `<!-- samp maps -->`
 * custom models **dff + txd + col** in meta.xml under `<!-- samp models -->`
 * list of **maps to load** in [maps/map_loader.lua](sampobj/maps/map_loader.lua)
