@@ -83,7 +83,7 @@ function setObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
             })
             setElementData(object, "material_info", mat_info)
         else
-            outputDebugString(string.format( "[OBJ_MAT] Error: getTextureNameFromIndex on model: %d, mat_index: %d", getElementModel(object),mat_index), 1)
+            outputDebugString(string.format( "[OBJ_MAT] Error: getTextureNameFromIndex on model: %d, mat_index: %d", getElementModel(object),mat_index), 2)
         end
     end
 end

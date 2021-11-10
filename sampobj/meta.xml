@@ -27,11 +27,22 @@
     <min_mta_version client="1.5.7-9.20416"></min_mta_version>
 
     <!-- samp models -->
-    <file type="client" src="models/barstool.dff"/>
-    <file type="client" src="models/barstool.txd"/>
-    <file type="client" src="models/barstool.col"/>
+
+    <!-- for office5 map -->
+    <file type="client" src="models/bigtire.dff"/>
+    <file type="client" src="models/bigtire.txd"/>
+    <file type="client" src="models/bigtire.col"/>
+    <file type="client" src="models/celltoilet.dff"/>
+    <file type="client" src="models/celltoilet.txd"/>
+    <file type="client" src="models/celltoilet.col"/>
+    <file type="client" src="models/money.dff"/>
+    <file type="client" src="models/money.txd"/>
+    <file type="client" src="models/money.col"/>
+    <file type="client" src="models/wallclock.dff"/>
+    <file type="client" src="models/wallclock.txd"/>
+    <file type="client" src="models/wallclock.col"/>
 
     <!-- samp maps -->
     <!-- <file type="client" src="maps/test.pwn"/> -->
-    <file type="client" src="maps/office.pwn"/>
+    <file type="client" src="maps/office5.pwn"/>
 </meta>

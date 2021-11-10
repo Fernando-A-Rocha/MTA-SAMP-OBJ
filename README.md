@@ -3,17 +3,26 @@
 ## Load your favourite SA-MP maps into MTA:SA
 
 ### Credits
+
 * Original creator: [gta191977649](https://github.com/gta191977649)
 * Extended by: [Fernando](https://github.com/Fernando-A-Rocha) (this fork)
 * SA-MP Objects by Rockstar & SA-MP devs
 
 ### How to use
+
 * **map.pwn** files in meta.xml under `<!-- samp maps -->`
 * custom model **dff + txd + col files** in meta.xml under `<!-- samp models -->`
 * list the **maps to load** in `map_loader.lua`
-* useful **commands**: `/listmaps`, `/gotomap`
+* useful **commands**: `/listmaps`, `/gotomap`, `/tdo` *(test draw objects)*
+
+### Example Maps and Models
+
+* this resource comes with a few **test maps** that contain custom models for you to see how it works
+* check the `.pwn map files` and the `corresponding models` in the respective folders
+* they are loaded in `map_loader.lua`
 
 ### How to generate a .col from a .dff file
+
 *  **this is for using `AddSimpleModel` to load a custom object**
 * use kdff [(download here)](https://www.mediafire.com/file/m0ej52v9agfo672/kdff_gui.rar/file)
 * based on tutorial in RCRP forums [here](https://forum.redcountyrp.com/threads/adding-collisions-and-vertex-colors-to-models-using-kdff.199930/)

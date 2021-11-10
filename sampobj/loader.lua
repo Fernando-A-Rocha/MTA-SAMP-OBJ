@@ -157,6 +157,6 @@ function (startedResource)
 
     if loadSAMPObjects() then
         loadSAMPMaps()
-        togDrawObjects()--testing
+        -- togDrawObjects()--testing
     end
 end)
