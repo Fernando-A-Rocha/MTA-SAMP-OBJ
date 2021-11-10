@@ -1,5 +1,5 @@
 <meta>
-    <!-- https://github.com/gta191977649/MTA-SAMP-OBJ -->
+    <!-- https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ -->
     <info author="gta191977649, Fernando" description="samp object and map loader"/>
 
     <script type="shared" src="async.lua"/>
@@ -19,6 +19,12 @@
     <file type="client" src="samp/samp.img" />
     <file type="client" src="samp/samp.col" />
     <file type="client" src="samp/samp.ide" />
+    
+    <!-- exports -->
+    <export function="AddSimpleModel" type="client" />
+    <export function="setObjectMaterial" type="client" />
+    <export function="createSAMPObject" type="client" />
+    <min_mta_version client="1.5.7-9.20416"></min_mta_version>
 
     <!-- samp models -->
     <file type="client" src="models/barstool.dff"/>
@@ -28,10 +34,4 @@
     <!-- samp maps -->
     <!-- <file type="client" src="maps/test.pwn"/> -->
     <file type="client" src="maps/office.pwn"/>
-    
-    <!-- exports -->
-    <export function="AddSimpleModel" type="client" />
-    <export function="setObjectMaterial" type="client" />
-    <export function="createSAMPObject" type="client" />
-    <min_mta_version client="1.5.7-9.20416"></min_mta_version>
 </meta>
