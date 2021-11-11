@@ -82,25 +82,13 @@ function parseTextureStudioMaps()
 			outputDebugString("Failed to parse map ID #"..map.id.." ('"..map.path.."'), reason: "..reason, 1)
 		else
 
-			-- update objects used
-			for k,id in pairs(objects_used) do
-				local found
-				for j,id2 in pairs(used_SAMP_objects) do
-					if id2 == id then
-						found = true
-						break
-					end
-				end
-				if not found then
-					table.insert(used_SAMP_objects, id)
-				end
-			end
+			-- objects IDs used by this map
+			used_SAMP_objects[map.id] = objects_used
 
-			-- set in table
+			-- parsed map content
 			parsed_maps[map.id] = parsed
 		end
 	end
-
 	
 	return true
 end
@@ -112,7 +100,6 @@ function (startedResource)
 	if not mapChecks() then return end
 
 	if parseTextureStudioMaps() then
-		-- outputChatBox((table.size(parsed_maps)).." parsed maps using "..#used_SAMP_objects.." SAMP objects",root, 0,255,0)
 		SERVER_READY = true
 	end
 end)
@@ -127,7 +114,7 @@ function loadMapForPlayers(map_id)
 	for _, map in pairs(mapList) do
 		if map.id == map_id and map.autoload == true then
 			for k, player in ipairs(getElementsByType("player")) do
-				triggerClientEvent(player, "sampobj:loadMap", resourceRoot, used_SAMP_objects, map_id, parsed_maps[map_id], map.int,map.dim)
+				triggerClientEvent(player, "sampobj:loadMap", resourceRoot, used_SAMP_objects[map_id], map_id, parsed_maps[map_id], map.int,map.dim)
 			end
 			return
 		end
@@ -136,7 +123,28 @@ end
 
 function sendResultWhenReady(player)
 	if SERVER_READY then
-		triggerLatentClientEvent(player, "sampobj:load", resourceRoot, used_SAMP_objects, parsed_maps)
+
+		-- only send maps which are auto-load on startup request
+
+		local autoload_maps = {}
+		local objects = {}
+
+		for mapid,content in pairs(parsed_maps) do
+			local autoload
+            for k, map in pairs(mapList) do
+                if map.id == mapid then
+                    autoload = map.autoload
+                    break
+                end
+            end
+
+            if autoload == true then
+            	objects[mapid] = used_SAMP_objects[mapid]
+            	autoload_maps[mapid] = content
+            end
+		end
+
+		triggerLatentClientEvent(player, "sampobj:load", resourceRoot, objects, autoload_maps)
 	else
 		setTimer(sendResultWhenReady, 1000, 1, player)
 	end

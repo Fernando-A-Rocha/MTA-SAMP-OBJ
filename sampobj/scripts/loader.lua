@@ -11,7 +11,11 @@ Buffer = {
     curr_line = 0,
 }
 
-local img, cols, ide
+-- checking the variables
+addCommandHandler("tp1", function() iprint(SAMPObjects) end, false)
+addCommandHandler("tp2", function() iprint(MTAIDMapSAMPModel) end, false)
+addCommandHandler("tp3", function() iprint(objects_load_list) end, false)
+addCommandHandler("tp4", function() iprint(loaded_maps) end, false)
 
 function loadSAMPObjects()
     local img = engineLoadIMGContainer("files/samp.img") -- returns object
@@ -28,10 +32,12 @@ function loadSAMPObjects()
             end
 
             local found
-            for k,id in pairs(objects_load_list) do
-                if id == samp_modelid then
-                    found = true
-                    break
+            for mapid,v in pairs(objects_load_list) do
+                for id,_ in pairs(v) do
+                    if id == samp_modelid then
+                        found = true
+                        break
+                    end
                 end
             end
 
@@ -40,7 +46,7 @@ function loadSAMPObjects()
             else
 
                 if SAMPObjects[samp_modelid] then
-                    -- print("SAMP Obj "..samp_modelid.." already loaded")
+                    -- outputChatBox("SAMP Obj "..samp_modelid.." already loaded")
                 else
 
                     local dff = string.gsub(s[2], '%s+', '')
@@ -178,6 +184,7 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
     loaded_maps[mapid] = { -- store elements so the map can be unloaded
         models = {},
         objects = {},
+        materials = {},
         removals = {},
     }
 
@@ -218,7 +225,13 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
         elseif v.f == "material" then
             if isElement(Buffer.last_object) then
                 local mat_index,model_id,lib_name,tex_name,color = unpack(v.variables)
-                SetObjectMaterial(Buffer.last_object, mat_index,model_id,lib_name,tex_name,color)
+                local elements = SetObjectMaterial(Buffer.last_object, mat_index,model_id,lib_name,tex_name,color)
+                if type(elements) == "table" then
+                    table.insert(loaded_maps[mapid].materials, {
+                        model = model_id,
+                        elements = elements,
+                    })
+                end
             end
         elseif v.f == "remove" then
             local model,radius,x,y,z = unpack(v.variables)
@@ -245,13 +258,46 @@ function unloadTextureStudioMap(mapid)
         return
     end
 
-    local destroyed_obj_ids = {}
-    for k,v in pairs(loaded_maps[mapid].models) do
-        local worked, reason = freeNewObject(v)
-        if not worked then
-            print(reason)
+    local icounts = {
+        materials = #(loaded_maps[mapid].materials),
+        models = #(loaded_maps[mapid].models),
+        objects = #(loaded_maps[mapid].objects),
+        removals = #(loaded_maps[mapid].removals),
+    }
+
+    local counts = {
+        materials = 0,
+        models = 0,
+        objects = 0,
+        removals = 0,
+    }
+    
+
+    local destroyed_obj_ids = {} -- free SAMP objects that are allocated and not used for any other map
+    local remaining_ids = {}
+    
+    
+    for k,v in pairs(loaded_maps[mapid].materials) do -- important cleanup
+
+        local model = v.model
+        if isSampObject(model) then
+            destroyed_obj_ids[model] = true
         end
+
+        local elements = v.elements
+        for j,w in pairs(elements) do
+            if isElement(w) then
+                destroyElement(w)
+            end
+        end
+
+        counts.materials = counts.materials + 1
     end
+    for k,v in pairs(loaded_maps[mapid].models) do
+        freeNewObject(v)
+        counts.models = counts.models + 1
+    end
+
     for k,v in pairs(loaded_maps[mapid].objects) do
         for j,w in pairs(v) do
             if isElement(w) then
@@ -261,54 +307,60 @@ function unloadTextureStudioMap(mapid)
                     destroyed_obj_ids[allocated_id] = true
                 end
                 destroyElement(w)
+                counts.objects = counts.objects + 1
             end
         end
     end
     for k,v in pairs(loaded_maps[mapid].removals) do
         local model,radius,x,y,z,int = unpack(v)
         restoreWorldModel(model,radius,x,y,z,int)
+        counts.removals = counts.removals + 1
     end
 
 
-    -- free SAMP objects that are allocated and not used for any other map
-
-    local remaining_ids = {}
-    for k,v in pairs(loaded_maps) do
-        if v == "objects" then
-            local model = getSAMPOrDefaultModel(v[1])
-            if isSampObject(model) then
-                local allocated_id = getElementModel(v[1])
-                remaining_ids[allocated_id] = true
+    for id2,v in pairs(loaded_maps) do
+        if id2 ~= mapid then
+            if v == "objects" then
+                local model = getSAMPOrDefaultModel(v[1])
+                if isSampObject(model) then
+                    local allocated_id = getElementModel(v[1])
+                    remaining_ids[allocated_id] = true
+                end
             end
         end
     end
 
     for id,_ in pairs(destroyed_obj_ids) do
         if not remaining_ids[id] then
-            local worked, reason = freeNewObject(id)
-            if not worked then
-                print(reason)
-            end
+            freeNewObject(id)
         end
     end
 
+    outputChatBox("  Unloaded map "..mapid.." stats:")
+    outputChatBox(counts.materials.."/"..icounts.materials.." materials cleaned")
+    outputChatBox(counts.models.."/"..icounts.models.." models cleaned")
+    outputChatBox(counts.objects.."/"..icounts.objects.." objects cleaned")
+    outputChatBox(counts.removals.."/"..icounts.removals.." removals cleaned")
 
     loaded_maps[mapid] = nil
+    objects_load_list[mapid] = nil
+
     print("Map "..mapid.." unloaded")
 end
 addEvent("sampobj:unloadMap", true)
 addEventHandler("sampobj:unloadMap", resourceRoot, unloadTextureStudioMap)
 
-function doLoadSAMPObjects(objs)
-    objects_load_list = objs
+function doLoadSAMPObjects(objs, mapid)
+    objects_load_list[mapid] = objs
+
     if loadSAMPObjects() then
         return true
     end
 end
 
-function doLoadTextureStudioMap(objs,mapid,parsed,int,dim)
+function doLoadTextureStudioMap(thismap_objs,mapid,parsed,int,dim)
 
-    if doLoadSAMPObjects(objs) then
+    if doLoadSAMPObjects(thismap_objs, mapid) then
 
         local loaded, reason = loadTextureStudioMap(mapid, parsed, int, dim)
         if not loaded then
@@ -321,11 +373,10 @@ addEventHandler("sampobj:loadMap", resourceRoot, doLoadTextureStudioMap)
 
 function clientStartupLoad(objs, maps)
 
-    if doLoadSAMPObjects(objs) then
+    for id, parsed in pairs(maps) do
+        
+        if doLoadSAMPObjects(objs[id], id) then
 
-        -- only load parsed maps
-        for id, parsed in pairs(maps) do
-            
             local int,dim
             for k, map in pairs(mapList) do
                 if map.id == id then

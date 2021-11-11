@@ -136,7 +136,7 @@ function getTextureStudioMap(filename)
                         })
 
                         if isSampObject(model) then
-                            table.insert(samp_objs_used, model)
+                            samp_objs_used[model] = true
                         end
                     end
                 end
@@ -152,7 +152,7 @@ function getTextureStudioMap(filename)
                         })
 
                         if isSampObject(model) then
-                            table.insert(samp_objs_used, model)
+                            samp_objs_used[model] = true
                         end
                     end
                 end

@@ -81,7 +81,9 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
                 dxSetShaderValue ( matShader, "gColor", 1,1,1,1);
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
+                destroyElement(matShader)
                 outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %d and tex_name: %s, file: %s, line: %d", model_id,tex_name, Buffer.curr_filepath, Buffer.curr_line), 1)
+                return false
             end
             engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
 
@@ -92,10 +94,13 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
                 tex_name = tex_name
             })
             setElementData(object, "material_info", mat_info)
+
+            return { matShader, matTexture }
         else
             local model = getSAMPOrDefaultModel(object)
             -- outputChatBox(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 255,255,0)
             outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 2)
+            return false
         end
     end
 end
