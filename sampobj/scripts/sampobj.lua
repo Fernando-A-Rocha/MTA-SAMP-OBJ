@@ -1,18 +1,22 @@
 
-function CreateSAMPObject(model_id,x,y,z,rx,ry,rz)
-    if SAMPObjects[model_id] and SAMPObjects[model_id].malloc_id ~= nil then 
-        --local lod = createObject(SAMPObjects[model_id].malloc_id,x,y,z,rx,ry,rz,true)
-        local samp_obj = createObject(SAMPObjects[model_id].malloc_id,x,y,z,rx,ry,rz)
-        if samp_obj then
-            setElementDoubleSided(samp_obj,true)
-            return samp_obj
-        else
-            outputDebugString("[SAMP_OBJ] Faild to create model: "..model_id, 1)
-            return false
-        end
-    elseif not isSampObject(model_id) then -- not SAMP Object
-        return createObject(model_id,x,y,z,rx,ry,rz)
-    else
-        outputDebugString("samp object not allocated: "..model_id, 2)
+function CreateNewObject(model_id,x,y,z,rx,ry,rz,distance)
+    distance = distance or 300
+    local obj, lod
+
+    local samp_info = SAMPObjects[model_id]
+    model_id = samp_info and samp_info.malloc_id or model_id
+
+    obj = createObject(model_id,x,y,z,rx,ry,rz)
+    
+    if not obj and isSampObject(model_id) then
+        outputDebugString("failed to create samp object, not allocated: "..model_id, 2)
     end
+
+    if obj and distance ~= 300 then
+        lod = createObject(model_id,x,y,z,rx,ry,rz,true)
+        setLowLODElement ( obj, lod )
+        engineSetModelLODDistance ( model_id, distance )
+    end
+
+    return obj,lod
 end

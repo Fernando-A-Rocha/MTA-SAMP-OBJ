@@ -93,10 +93,7 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
             })
             setElementData(object, "material_info", mat_info)
         else
-            local model = getElementModel(object)
-            local samp_info = MTAIDMapSAMPModel[model]
-            model = samp_info and ("(samp) "..samp_info.samp_id) or tostring(model)
-
+            local model = getSAMPOrDefaultModel(object)
             -- outputChatBox(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 255,255,0)
             outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 2)
         end

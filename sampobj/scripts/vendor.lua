@@ -1,6 +1,21 @@
 function isSampObject(model)
     model = tonumber(model)
-    return model >= 18631 and model <= 19999 or model >= 11682 and model <= 12799
+    return (model >= 18631 and model <= 19999) or (model >= 11682 and model <= 12799)
+end
+
+function getSAMPOrDefaultModel(object)
+	local model = getElementModel(object)
+	local samp_info = MTAIDMapSAMPModel[model]
+	model = samp_info and samp_info.samp_id or model
+	return model
+end
+
+function table.size ( tab )
+    local length = 0
+    for _ in pairs ( tab ) do
+        length = length + 1
+    end
+    return length
 end
 
 function genFileStream() -- credit by thisdp

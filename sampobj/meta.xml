@@ -3,32 +3,8 @@
     <info author="gta191977649, Fernando" description="samp object and map loader"/>
     <min_mta_version client="1.5.8" server="1.5.8"></min_mta_version>
 
-    <!-- scripts -->
-        <script type="shared" src="scripts/async.lua"/>
-        <script type="shared" src="scripts/vendor.lua"/>
-        <script type="client" src="maps/_maplist.lua"/>
-        <script type="client" src="scripts/loader.lua"/>
-        <script type="client" src="scripts/matlist.lua"/>
-        <script type="client" src="scripts/sampobj.lua"/>
-        <script type="client" src="scripts/sampmaterial.lua"/>
-        <script type="client" src="scripts/sampmodel.lua"/>
-        <script type="client" src="scripts/texturestudio_loader.lua"/>
-
-    <!-- files -->
-        <file src="files/mta-helper.fx"/>
-        <file src="files/shader.fx"/>
-        <file src="files/mat_color.fx"/>
-        <file src="files/samp.img" />
-        <file src="files/samp.col" />
-        <file src="files/samp.ide" />
-
-    <!-- exported functions -->
-        <export function="CreateSAMPObject" type="client" />
-        <export function="SetObjectMaterial" type="client" />
-        <export function="AddSimpleModel" type="client" />
-
     <!-- samp models -->
-        <!-- for office5 map -->
+        <!-- for test2 map -->
         <file src="models/bigtire.dff"/>
         <file src="models/bigtire.txd"/>
         <file src="models/bigtire.col"/>
@@ -44,5 +20,34 @@
 
     <!-- samp maps -->
         <file src="maps/test.pwn"/>
-        <file src="maps/office5.pwn"/>
+        <file src="maps/test2.pwn"/>
+
+
+    <!-- files -->
+        <file src="files/mta-helper.fx"/>
+        <file src="files/shader.fx"/>
+        <file src="files/mat_color.fx"/>
+        <file src="files/samp.img" />
+        <file src="files/samp.col" />
+        <file src="files/samp.ide" />
+
+
+    <!-- scripts -->
+        <script type="shared" src="scripts/async.lua"/>
+        <script type="shared" src="scripts/vendor.lua"/>
+        <script type="shared" src="scripts/texturestudio_parser.lua"/>
+        <script type="shared" src="maps/_maplist.lua"/>
+        <script type="client" src="scripts/loader.lua"/>
+        <script type="client" src="scripts/matlist.lua"/>
+        <script type="client" src="scripts/sampobj.lua"/>
+        <script type="client" src="scripts/sampmaterial.lua"/>
+        <script type="client" src="scripts/sampmodel.lua"/>
+        <script type="client" src="scripts/commands.lua"/>
+        <script type="server" src="scripts/server.lua"/>
+        <script type="server" src="scripts/commands_server.lua"/>
+
+    <!-- exported functions -->
+        <export function="CreateNewObject" type="client" />
+        <export function="SetObjectMaterial" type="client" />
+        <export function="AddSimpleModel" type="client" />
 </meta>

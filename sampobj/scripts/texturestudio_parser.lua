@@ -1,14 +1,3 @@
---[[
-    Original creator: gta191977649
-    Edited by: Fernando
-]]
-
-Buffer ={
-    last_object = nil,
-    total = 0,
-    curr_filepath = "",
-    curr_line = 0,
-}
 
 function string.trim(str)
     str = string.gsub(str, "%s+", "")
@@ -106,68 +95,84 @@ function parseAddSimpleModel(code)
     return virtualworld, baseid, newid, dffname, txdname
 end
 
-
-function loadTextureStudioMap(filename,int,dim) 
-    int = int or 0
-    dim = dim or 0
+-- Do the parsing here
+function getTextureStudioMap(filename)
     if fileExists(filename) then 
+
+        local result = {}
+        local samp_objs_used = {}
+
         local f = fileOpen(filename)
         local str = fileRead(f,fileGetSize(f))
         fileClose(f)
-        Buffer.curr_filepath = filename
 
         Lines = split(str,'\n' )
-        local lastObjid = -1
-        local obj = nil
-
         for i = 1, #Lines do
             local line = Lines[i]
-            Buffer.curr_line = i
-
             if not isComment(line) then
 
-                local customModelFailed = nil
                 if isAddSimpleModel(line) then
                     local virtualworld, baseid, newid, dffname, txdname = parseAddSimpleModel(line)
                     if virtualworld then
-                        if not AddSimpleModel(virtualworld, baseid, newid, dffname, txdname) then
-                            customModelFailed = newid
-                        end
+                        table.insert(result, {
+                            f = "model",
+                            line = i,
+                            variables = {
+                                virtualworld, baseid, newid, dffname, txdname
+                            }
+                        })
                     end
                 end
                 if isCreateObject(line) then
                     local b = split(line,"=")
-                    local model,x,y,z,rx,ry,rz,stream = parseCreateObject(b[2])
-                    if model and (customModelFailed and customModelFailed ~= model) or (not customModelFailed) then
-                        Buffer.last_object = CreateSAMPObject(model,x,y,z,rx,ry,rz)
-                        if isElement(Buffer.last_object) then
-                            setElementInterior(Buffer.last_object,int)
-                            setElementDimension(Buffer.last_object,dim)
-                            Buffer.total = Buffer.total + 1
+                    local model,x,y,z,rx,ry,rz,dist = parseCreateObject(b[2])
+                    if model then
+                        table.insert(result, {
+                            f = "object",
+                            line = i,
+                            variables = {
+                                model,x,y,z,rx,ry,rz,dist
+                            }
+                        })
+
+                        if isSampObject(model) then
+                            table.insert(samp_objs_used, model)
                         end
                     end
                 end
                 if isSetMaterial(line) then 
                     local index,model,lib,txd,color = parseSetObjectMaterial(line)
-                    if isElement(Buffer.last_object) then 
-                        SetObjectMaterial(Buffer.last_object,index,model,lib,txd,color)
-                    else
-                        outputConsole(string.format("[OBJ_MAT]: Set %s on Error.",lib))
+                    if index then
+                        table.insert(result, {
+                            f = "material",
+                            line = i,
+                            variables = {
+                                index,model,lib,txd,color
+                            }
+                        })
+
+                        if isSampObject(model) then
+                            table.insert(samp_objs_used, model)
+                        end
                     end
                 end
                 if isWorldObjectRemovel(line) then 
                     local model,x,y,z,radius = parseRemoveBuildingForPlayer(line)
-                    removeWorldModel(model,radius,x,y,z,int)
+                    if model then
+                        table.insert(result, {
+                            f = "remove",
+                            line = i,
+                            variables = {
+                                model,x,y,z,radius
+                            }
+                        })
+                    end
                 end
             end
         end
+
+        return result, "", samp_objs_used
     else
         return false, filename.." doesn't exist"
     end
-
-    Buffer.total = 0
-    Buffer.last_object = nil
-    Buffer.curr_filepath = ""
-    Buffer.curr_line = 0
-    return true
 end

@@ -27,15 +27,15 @@ function AddSimpleModel(virtualworld, baseid, newid, dffname, txdname) -- virtua
 
 	-- SAMP model as base id not supported
 	if isSampObject(baseid) then
-		outputDebugString(string.format("[SAMP_OBJ] ignoring SAMP base id %d upon adding: %d - %s, %s, %s ...",baseid, newid, dffname,txdname,colname), 2)
+		-- outputDebugString(string.format("[SAMP_OBJ] ignoring SAMP base id %d upon adding: %d - %s, %s, %s ...",baseid, newid, dffname,txdname,colname), 2)
 		baseid = nil
 	end
 
-	local allocated_id, reason = mallocSAMPObject(txdpath, dffpath, colpath, newid, baseid, dffname, txdname)
-	if not allocated_id then
+	local allocated_id, reason = mallocNewObject(txdpath, dffpath, colpath, newid, baseid, dffname, txdname)
+	if not tonumber(allocated_id) then
 		outputDebugString(string.format("[SAMP_OBJ] failed to add object: %d - %s, %s, %s, reason: %s",newid, dffname,txdname,colname,reason), 1)
 		return false
 	end
 
-	return true
+	return allocated_id
 end
