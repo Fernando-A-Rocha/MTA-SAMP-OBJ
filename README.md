@@ -14,7 +14,7 @@
 * List map files (**name.pwn**) in meta.xml under `<!-- samp maps -->`
 * And custom models (**dff + txd + col**) in meta.xml under `<!-- samp models -->`
 * Define **maps to load** in [maps/_maplist.lua](sampobj/maps/_maplist.lua)
-* useful **commands**: `/listmaps`, `/gotomap`, `/tdo` *(test draw objects)*
+* **Useful commands**: `/listmaps`, `/gotomap`, `/tdo` *(test draw objects)*
 
 ### Examples
 
@@ -38,11 +38,11 @@
 
 ### Issues
 
-* Currently no `SetObjectMaterialText` support
-* Currently ``Material Color`` is somehow bugged, especially if it contains the alpha materials
+* `SetObjectMaterialText` is not yet supported
+* `Material Color` is not yet supported
+* `AddSimpleModel` doesn't support a SAMP model as base ID
 * High memory usage: MTA currently donesn't support of server-side model allocation, they have to be allocated clientside, which takes up a lot of memory.
 
 ### Todo
 
-* `AddSimpleModel` doesn't support a SAMP model as base ID
 * Only allocate SAMP ids that loaded maps are going to use (to save memory), a temporary solution until server-side model allocation comes.
