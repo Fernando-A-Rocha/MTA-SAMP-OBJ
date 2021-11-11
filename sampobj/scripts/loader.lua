@@ -14,17 +14,9 @@ Buffer = {
 local img, cols, ide
 
 function loadSAMPObjects()
-    if not img then
-        img = engineLoadIMGContainer("files/samp.img") -- returns object
-    end
-    if not cols then
-        cols = engineGetCOLsFromLibrary("samp/samp.col") -- returns array
-    end
-    if not ide then
-        local f = fileOpen("files/samp.ide")
-        ide = fileRead(f,fileGetSize(f))
-        fileClose(f)
-    end
+    local img = engineLoadIMGContainer("files/samp.img") -- returns object
+    local cols = engineGetCOLsFromLibrary("samp/samp.col") -- returns array
+    local ide = getSAMPIDEContent() -- returns file content string
 
     Lines = split(ide,'\n' )
     for i = 1, #Lines do
@@ -123,7 +115,10 @@ function mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, baseid, dffNam
     
     SAMPObjects[samp_modelid] = {
         malloc_id=id, samp_id=samp_modelid,
-        dff=string.lower(dffName),txd=string.lower(txdName)
+        dff=string.lower(dffName),txd=string.lower(txdName),
+        elements = {
+            file_txd, file_dff, file_col -- destroy to free memory
+        }
     }
 
     -- to save speed finding ids
@@ -142,19 +137,27 @@ function freeNewObject(allocated_id)
         return false, "id '"..allocated_id.."' not allocated"
     end
 
+    engineRestoreModel(allocated_id)
+
     if not engineFreeModel(allocated_id) then
         return false, "failed to free model id '"..allocated_id.."'"
     end
 
     for k,v in pairs(SAMPObjects) do
         if v.malloc_id == allocated_id then
+
+            for j,w in pairs(v.elements) do
+                if isElement(w) then
+                    destroyElement(w)
+                end
+            end
+
             SAMPObjects[k] = nil
             break
         end
     end
 
     MTAIDMapSAMPModel[allocated_id] = nil
-
     return true
 end
 

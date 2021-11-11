@@ -18,6 +18,13 @@ function table.size ( tab )
     return length
 end
 
+function getSAMPIDEContent()
+	local f = fileOpen("files/samp.ide")
+    local ide = fileRead(f,fileGetSize(f))
+    fileClose(f)
+    return ide
+end
+
 function genFileStream() -- credit by thisdp
 	return {
 		--Variable

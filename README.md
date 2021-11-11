@@ -16,6 +16,10 @@
 * Many debug/error messages & comments to help you understand what's happening
 * Easily customizable & extendable
 
+### Before installing
+
+* ⚠️ **Minimum MTA Client & Server version:** r21026 from [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
+
 ### How to use
 
 * Place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/models)

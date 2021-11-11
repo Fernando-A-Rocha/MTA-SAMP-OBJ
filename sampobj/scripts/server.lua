@@ -77,32 +77,27 @@ function parseTextureStudioMaps()
 
 	for _, map in pairs(mapList) do
 
-		if map.autoload == true then
+		local parsed, reason, objects_used = getTextureStudioMap(map.path)
+		if not (type(parsed)=="table") then
+			outputDebugString("Failed to parse map ID #"..map.id.." ('"..map.path.."'), reason: "..reason, 1)
+		else
 
-			local parsed, reason, objects_used = getTextureStudioMap(map.path)
-			if not (type(parsed)=="table") then
-				outputDebugString("Failed to parse map ID #"..map.id.." ('"..map.path.."'), reason: "..reason, 1)
-			else
-
-				-- update objects used
-				for k,id in pairs(objects_used) do
-					local found
-					for j,id2 in pairs(used_SAMP_objects) do
-						if id2 == id then
-							found = true
-							break
-						end
-					end
-					if not found then
-						table.insert(used_SAMP_objects, id)
+			-- update objects used
+			for k,id in pairs(objects_used) do
+				local found
+				for j,id2 in pairs(used_SAMP_objects) do
+					if id2 == id then
+						found = true
+						break
 					end
 				end
-
-				-- set in table
-				parsed_maps[map.id] = parsed
+				if not found then
+					table.insert(used_SAMP_objects, id)
+				end
 			end
-		else
-			-- print("Skipping map "..map.id)
+
+			-- set in table
+			parsed_maps[map.id] = parsed
 		end
 	end
 
@@ -130,7 +125,7 @@ end
 
 function loadMapForPlayers(map_id)
 	for _, map in pairs(mapList) do
-		if map.id == map_id then
+		if map.id == map_id and map.autoload == true then
 			for k, player in ipairs(getElementsByType("player")) do
 				triggerClientEvent(player, "sampobj:loadMap", resourceRoot, used_SAMP_objects, map_id, parsed_maps[map_id], map.int,map.dim)
 			end
