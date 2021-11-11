@@ -31,9 +31,9 @@ function loadSAMPObjects()
                 -- replace
                 if loadCol and loadDff and loadTxd then
 
-                    local newid = mallocSAMPObject(loadTxd, loadDff, loadCol, samp_modelid, nil, dff,txd)
+                    local newid,reason = mallocSAMPObject(loadTxd, loadDff, loadCol, samp_modelid, nil, dff,txd)
                     if not tonumber(newid) then
-                        outputDebugString(string.format("[SAMP_OBJ] id failed to allocate for samp model %d", samp_modelid), 1)
+                        outputDebugString(string.format("[SAMP_OBJ] id failed to allocate for samp model %d, reason: %s", samp_modelid,reason), 1)
                     end
                 else
                     outputDebugString(string.format("[SAMP_OBJ] dff %s failed to load",string.lower(dff)), 1)
@@ -50,31 +50,53 @@ end
 function mallocSAMPObject(loadTxd, loadDff, loadCol, samp_modelid, baseid, dffName, txdName)
     -- malloc & replace object
 
+    baseid = tonumber(baseid)
     local id
-    if tonumber(baseid) then
-        id = engineRequestModel("object", tonumber(baseid))
+
+    if baseid then
+        id = engineRequestModel("object", baseid)
     else
         id = engineRequestModel("object")
     end
-    if not id then
-        return false
+    if not tonumber(id) then
+        return false, "Fail: engineRequestModel"..(baseid and ("("..baseid..")") or ("()"))
     end
 
     -- load file
     local file_txd = engineLoadTXD(loadTxd)
-    local file_dff = engineLoadDFF(loadDff)
-    local file_col = engineLoadCOL(loadCol)
+    if not file_txd then
+        return false, "Fail: engineLoadTXD("..tostring(loadTxd)..")"
+    end
 
-    engineImportTXD(file_txd, id)
-    engineReplaceModel(file_dff, id)
-    engineReplaceCOL(file_col,id)
+    local file_dff = engineLoadDFF(loadDff)
+    if not file_dff then
+        return false, "Fail: engineLoadDFF("..tostring(loadDff)..")"
+    end
+
+    local file_col = engineLoadCOL(loadCol)
+    if not file_col then
+        return false, "Fail: engineLoadCOL("..tostring(loadCol)..")"
+    end
+
+    
+    if not engineImportTXD(file_txd, id) then
+        return false, "Fail: engineImportTXD("..tostring(file_txd)..", "..id..")"
+    end
+
+    if not engineReplaceModel(file_dff, id) then
+        return false, "Fail: engineReplaceModel("..tostring(file_dff)..", "..id..")"
+    end
+    
+    if not engineReplaceCOL(file_col,id) then
+        return false, "Fail: engineReplaceCOL("..tostring(file_col)..", "..id..")"
+    end
     
     SAMPObjects[samp_modelid] = {
         malloc_id=id, samp_id=samp_modelid,
         dff=string.lower(dffName),txd=string.lower(txdName)
     }
 
-    -- for the sake of saving speed of finding the id
+    -- to save speed finding ids
     MTAIDMapSAMPModel[id] = SAMPObjects[samp_modelid]
 
     total = total + 1
@@ -152,11 +174,68 @@ function drawObjects()
     end
 end
 
+
+function listMaps(cmd)
+    for k, map in pairs(mapList) do
+        outputChatBox("(#"..map.id..") '"..map.name.."' int: "..map.int.." dim: "..map.dim, 255,126,0)
+    end
+end
+addCommandHandler("listmaps", listMaps, false)
+
+function gotoMapCommand(cmd, map_id)
+    if not tonumber(map_id) then
+        outputChatBox("SYNTAX: /"..cmd.." [map_id]", 255,194,14)
+        return listMaps(cmd)
+    end
+    map_id = tonumber(map_id)
+
+    for k, map in pairs(mapList) do
+        if map.id == map_id then
+
+            setElementPosition(getLocalPlayer(), unpack(map.pos))
+            setElementDimension(getLocalPlayer(), map.dim)
+            setElementInterior(getLocalPlayer(), map.int)
+            
+            return outputChatBox("Teleported to map #"..map_id.." named '"..map.name.."'", 0,255,0)
+        end
+    end
+    
+    outputChatBox("Map #"..map_id.." not found", 255,0,0)
+    return listMaps(cmd)
+end
+addCommandHandler("gotomap", gotoMapCommand, false)
+
+-- called once samp objects are loaded
+function loadSAMPMaps()
+    for k, map in pairs(mapList) do
+        if loadTextureStudioMap(map.path, map.int, map.dim) then
+            -- outputDebugString("Loaded '"..map.name.."' (ID #"..map.id..")", 0,20,255,20)
+        else
+            outputDebugString("Failed to load '"..map.name.."' ('"..map.path.."') (ID #"..map.id..")", 1)
+        end
+    end
+    return true
+end
+
+
 addEventHandler( "onClientResourceStart", resourceRoot, 
 function (startedResource)
 
     if loadSAMPObjects() then
-        loadSAMPMaps()
+        if loadSAMPMaps() then
+            collectgarbage("collect")
+        end
+
         -- togDrawObjects()--testing
     end
+end)
+
+addEventHandler( "onClientResourceStop", resourceRoot, 
+function (stoppedResource)
+    for id,_ in pairs(MTAIDMapSAMPModel) do
+        if not engineFreeModel(id) then
+            outputDebugString("Failed to free allocated ID "..id, 1)
+        end
+    end
+    collectgarbage("collect")
 end)

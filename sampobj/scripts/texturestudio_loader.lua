@@ -3,10 +3,13 @@
     Edited by: Fernando
 ]]
 
-local Buffer ={
+Buffer ={
     last_object = nil,
     total = 0,
+    curr_filepath = "",
+    curr_line = 0,
 }
+
 function string.trim(str)
     str = string.gsub(str, "%s+", "")
     return str
@@ -111,12 +114,16 @@ function loadTextureStudioMap(filename,int,dim)
         local f = fileOpen(filename)
         local str = fileRead(f,fileGetSize(f))
         fileClose(f)
+        Buffer.curr_filepath = filename
+
         Lines = split(str,'\n' )
         local lastObjid = -1
         local obj = nil
 
         for i = 1, #Lines do
             local line = Lines[i]
+            Buffer.curr_line = i
+
             if not isComment(line) then
 
                 local customModelFailed = nil
@@ -159,5 +166,8 @@ function loadTextureStudioMap(filename,int,dim)
     end
 
     Buffer.total = 0
+    Buffer.last_object = nil
+    Buffer.curr_filepath = ""
+    Buffer.curr_line = 0
     return true
 end

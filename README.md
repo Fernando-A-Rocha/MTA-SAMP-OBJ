@@ -1,4 +1,4 @@
-# SA-MP Object Loader
+# SA-MP Map Loader
 
 ## Load your favourite SA-MP maps into MTA:SA
 
@@ -10,21 +10,20 @@
 
 ### How to use
 
-* place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/models)
-* **map.pwn** files in meta.xml under `<!-- samp maps -->`
-* custom models **dff + txd + col** in meta.xml under `<!-- samp models -->`
-* list of **maps to load** in [maps/map_loader.lua](sampobj/maps/map_loader.lua)
+* Place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/models)
+* List map files (**name.pwn**) in meta.xml under `<!-- samp maps -->`
+* And custom models (**dff + txd + col**) in meta.xml under `<!-- samp models -->`
+* Define **maps to load** in [maps/_maplist.lua](sampobj/maps/_maplist.lua)
 * useful **commands**: `/listmaps`, `/gotomap`, `/tdo` *(test draw objects)*
 
-### Example Maps and Models
+### Examples
 
-* this resource comes with a few **test maps** that contain custom models for you to see how it works
-* check the `.pwn map files` and the `corresponding models` in the respective folders
-* they are loaded in [maps/map_loader.lua](sampobj/maps/map_loader.lua)
+* This resource comes with a few **test maps** that contain custom models for you to see how it works
+* Check the `.pwn map files` and the `corresponding models` in the respective folders
 
-### How to generate a .col from a .dff file
+### What if my custom model only has dff + txd, how do I get the col?
 
-* tutorial [here](sampobj/models/_TUTORIAL.md)
+* Check this tutorial [here](sampobj/models/_TUTORIAL.md)
 
 ### Exported functions
 
@@ -37,9 +36,13 @@
     * adds new objects by passing a base model id, the new samp id and the dff + txd names
     * virtualworld is currently ignored
 
-### Issues & todos in future
+### Issues
 
-* Currently the material color is somehow bugged, especially the one contains the alpha materials.
-* Drawdistance issue, due to the engine limitation the max distances viewdistance of a normal object is 300 unit, if your map contains the wide areas of custom samp objects, the far distances objects might not visible.
-* High Memory Useage, due to the MTA current don't have the support of server-side defined object ids, therefore inorder to keep the original samp model id works i did a big mapping array to keep the mta-allocated ids & orignal samp ids in relation. however the down-side is the high RAM use, it might needs to takes some further optimzation in the furtue.
-* Currently no `SetObjectMaterialText`
+* Currently no `SetObjectMaterialText` support
+* Currently ``Material Color`` is somehow bugged, especially if it contains the alpha materials
+* High memory usage: MTA currently donesn't support of server-side model allocation, they have to be allocated clientside, which takes up a lot of memory.
+
+### Todo
+
+* `AddSimpleModel` doesn't support a SAMP model as base ID
+* Only allocate SAMP ids that loaded maps are going to use (to save memory), a temporary solution until server-side model allocation comes.

@@ -1,8 +1,8 @@
-// 19475 as base model ID not supporter
-AddSimpleModel(-1, 1337, -7002, "wallclock.dff", "wallclock.txd");
-AddSimpleModel(-1, 1337, -7060, "bigtire.dff", "bigtire.txd");
-AddSimpleModel(-1, 1337, -7063, "money.dff", "money.txd");
-AddSimpleModel(-1, 1337, -7068, "celltoilet.dff", "celltoilet.txd");
+// Test models :)
+AddSimpleModel(-1, 19475, -7002, "wallclock.dff", "wallclock.txd");
+AddSimpleModel(-1, 19475, -7060, "bigtire.dff", "bigtire.txd");
+AddSimpleModel(-1, 19475, -7063, "money.dff", "money.txd");
+AddSimpleModel(-1, 19475, -7068, "celltoilet.dff", "celltoilet.txd");
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 tmpobjid = CreateDynamicObject(19379, 1928.189941, -357.559570, 49.609832, 0.000000, 90.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 3979, "civic01_lan", "sl_concretewall1", 0x00000000);
@@ -107,7 +107,7 @@ tmpobjid = CreateDynamicObject(11711, 1928.812744, -342.134521, 52.381259, 0.000
 SetDynamicObjectMaterial(tmpobjid, 0, -1, "none", "none", 0xFFFFFFFF);
 tmpobjid = CreateDynamicObject(19560, 1927.635498, -349.483642, 52.283752, 90.000000, 360.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
-SetDynamicObjectMaterial(tmpobjid, 1, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
+// SetDynamicObjectMaterial(tmpobjid, 1, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(1703, 1924.666503, -353.245086, 49.667179, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 1, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(19174, 1927.491699, -358.488586, 51.973892, 0.000000, 0.000000, 180.000000, -1, -1, -1, 300.00, 300.00); 
@@ -166,11 +166,11 @@ SetDynamicObjectMaterial(tmpobjid, 2, 18029, "genintintsmallrest", "GB_restaursm
 tmpobjid = CreateDynamicObject(2163, 1930.892211, -354.044342, 49.702175, 0.000000, 0.000000, 270.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 SetDynamicObjectMaterial(tmpobjid, 1, 3292, "cxrf_payspray", "sf_spray1", 0x00000000);
-SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
+// SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(2163, 1924.047607, -354.846801, 49.672630, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 SetDynamicObjectMaterial(tmpobjid, 1, 3292, "cxrf_payspray", "sf_spray1", 0x00000000);
-SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
+// SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(2194, 1924.254028, -351.830566, 51.778781, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 1, 18029, "genintintsmallrest", "GB_restaursmll15", 0x00000000);
 tmpobjid = CreateDynamicObject(2194, 1930.764404, -351.936553, 51.837062, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
@@ -202,7 +202,7 @@ SetDynamicObjectMaterial(tmpobjid, 1, 2670, "proc_rub", "CJ_CERT_1", 0x00000000)
 tmpobjid = CreateDynamicObject(2167, 1924.100830, -346.272186, 49.680683, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 SetDynamicObjectMaterial(tmpobjid, 1, 3292, "cxrf_payspray", "sf_spray1", 0x00000000);
-SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
+// SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(2163, 1924.102661, -345.363220, 49.670795, 0.000000, 0.000000, 90.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 0, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 SetDynamicObjectMaterial(tmpobjid, 1, 3292, "cxrf_payspray", "sf_spray1", 0x00000000);
@@ -249,7 +249,7 @@ SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x0
 tmpobjid = CreateDynamicObject(1742, 1931.063598, -342.405334, 49.696105, 0.000000, 0.000000, 270.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 2, 11631, "mp_ranchcut", "mpCJ_SPEAKER4", 0x00000000);
 tmpobjid = CreateDynamicObject(1808, 1928.828491, -349.269256, 49.690254, 0.000000, 0.000000, 180.000000, -1, -1, -1, 300.00, 300.00); 
-SetDynamicObjectMaterial(tmpobjid, 1, 3292, "cxrf_payspray", "sf_spray1", 0x00000000);
+// SetDynamicObjectMaterial(tmpobjid, 1, 3292, "cxrf_payspray", "sf_spray1", 0x00000000);
 tmpobjid = CreateDynamicObject(2010, 1930.501831, -349.037780, 49.683906, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00); 
 SetDynamicObjectMaterial(tmpobjid, 1, 9919, "grnwht_sfe", "sl_dtdoor1", 0x00000000);
 tmpobjid = CreateDynamicObject(2010, 1924.483642, -349.192901, 49.684432, 0.000000, 0.000000, -34.100006, -1, -1, -1, 300.00, 300.00); 

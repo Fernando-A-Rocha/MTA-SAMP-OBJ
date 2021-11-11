@@ -1,10 +1,13 @@
 -- Credits: Fernando
 
 local mpath = "models/"
+
 function AddSimpleModel(virtualworld, baseid, newid, dffname, txdname) -- virtualworld ignored
 	baseid = tonumber(baseid)
+	assert(baseid, "baseid not number: "..tostring(baseid))
+
 	newid = tonumber(newid)
-	assert(newid and baseid, "baseid or newid not numbers")
+	assert(newid, "newid not number: "..tostring(newid))
 
 	local dffpath = mpath..dffname
 	assert(fileExists(dffpath), "file not found: "..dffpath)
@@ -16,12 +19,22 @@ function AddSimpleModel(virtualworld, baseid, newid, dffname, txdname) -- virtua
 	local colpath = mpath..colname
 	assert(fileExists(colpath), "file not found: "..colpath)
 
-	local allocated_id = mallocSAMPObject(txdpath, dffpath, colpath, newid, baseid, dffname, txdname)
-	if not allocated_id then
-		outputDebugString(string.format("[SAMP_OBJ] failed to add object: %d - %s, %s, %s",newid, dffname,txdname,colname), 1)
+	if SAMPObjects[newid] then
+		local reason2 = "newid already allocated"
+		outputDebugString(string.format("[SAMP_OBJ] failed to add object: %d - %s, %s, %s, reason: %s",newid, dffname,txdname,colname,reason2), 1)
 		return false
-	-- else
-		-- outputDebugString(string.format("[SAMP_OBJ] allocated to: %d - %s, %s, %s",newid, dffname,txdname,colname), 0,25,255,25)
+	end
+
+	-- SAMP model as base id not supported
+	if isSampObject(baseid) then
+		outputDebugString(string.format("[SAMP_OBJ] ignoring SAMP base id %d upon adding: %d - %s, %s, %s ...",baseid, newid, dffname,txdname,colname), 2)
+		baseid = nil
+	end
+
+	local allocated_id, reason = mallocSAMPObject(txdpath, dffpath, colpath, newid, baseid, dffname, txdname)
+	if not allocated_id then
+		outputDebugString(string.format("[SAMP_OBJ] failed to add object: %d - %s, %s, %s, reason: %s",newid, dffname,txdname,colname,reason), 1)
+		return false
 	end
 
 	return true

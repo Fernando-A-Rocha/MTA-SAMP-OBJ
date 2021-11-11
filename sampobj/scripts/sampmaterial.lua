@@ -1,25 +1,26 @@
 function getTextureNameFromIndex(object,mat_index)
     local mta_id = getElementModel(object)
+    local samp_info = MTAIDMapSAMPModel[mta_id]
+    
     local tex_name = nil
+
     local model = ""
-    if MTAIDMapSAMPModel[mta_id] ~= nil then -- if samp model
-        if MTAIDMapSAMPModel[mta_id] ~= nil then 
-            model = MTAIDMapSAMPModel[mta_id].dff
-            if SA_MATLIB[model..".dff"] ~= nil then
-                for idx,val in ipairs(SA_MATLIB[model..".dff"]) do
-                    if val.index == mat_index then --
-                        tex_name = val.name
-                    end
+
+    if samp_info then -- if samp model
+        model = samp_info.dff
+        if SA_MATLIB[model..".dff"] ~= nil then
+            for _,val in ipairs(SA_MATLIB[model..".dff"]) do
+                if val.index == mat_index then --
+                    tex_name = val.name
                 end
-            else
-                outputDebugString("(samp)"..model..".dff not in SA_MATLIB", 2)
             end
-            
+        else
+            outputDebugString("(samp) "..model..".dff not in SA_MATLIB", 2)
         end
     else -- normal SA object
         model = string.lower(engineGetModelNameFromID(mta_id))
         if SA_MATLIB[model..".dff"] ~= nil then
-            for idx,val in ipairs(SA_MATLIB[model..".dff"]) do
+            for _,val in ipairs(SA_MATLIB[model..".dff"]) do
                 if val.index == mat_index then --
                     tex_name = val.name
                 end
@@ -28,6 +29,15 @@ function getTextureNameFromIndex(object,mat_index)
             outputDebugString(model..".dff not in SA_MATLIB", 2)
         end
     end
+
+    -- debugging
+    -- if not tex_name and SA_MATLIB[model..".dff"] then
+    --     outputChatBox((samp_info and ("(samp) "..samp_info.samp_id) or mta_id).." index "..mat_index.." not found, "..#(SA_MATLIB[model..".dff"]).." available:")
+    --     for k,val in pairs(SA_MATLIB[model..".dff"]) do
+    --         outputChatBox(val.index.." => "..val.name)
+    --     end
+    -- end
+
     return tex_name
 end
 function getTextureFromName(model_id,tex_name)
@@ -71,7 +81,7 @@ function setObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
                 dxSetShaderValue ( matShader, "gColor", 1,1,1,1);
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
-                outputDebugString(string.format( "[OBJ_MAT] Error: getTextureFromName on model_id: %d and tex_name: %s", model_id,tex_name), 1)
+                outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %d and tex_name: %s, file: %s, line: %d", model_id,tex_name, Buffer.curr_filepath, Buffer.curr_line), 1)
             end
             engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
 
@@ -83,7 +93,12 @@ function setObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
             })
             setElementData(object, "material_info", mat_info)
         else
-            outputDebugString(string.format( "[OBJ_MAT] Error: getTextureNameFromIndex on model: %d, mat_index: %d", getElementModel(object),mat_index), 2)
+            local model = getElementModel(object)
+            local samp_info = MTAIDMapSAMPModel[model]
+            model = samp_info and ("(samp) "..samp_info.samp_id) or tostring(model)
+
+            -- outputChatBox(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 255,255,0)
+            outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 2)
         end
     end
 end
