@@ -65,7 +65,7 @@ function getColor(color)
     end 
 end
 
-function setObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
+function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
     --mta doesn't need lib_name (.txd file) to find texture by name
     if model_id ~= -1 then -- dealing replaced mat objects
         local target_tex_name = getTextureNameFromIndex(object,mat_index)

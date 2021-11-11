@@ -16,20 +16,20 @@
 * Define **maps to load** in [maps/_maplist.lua](sampobj/maps/_maplist.lua)
 * **Useful commands**: `/listmaps`, `/gotomap`, `/tdo` *(test draw objects)*
 
+### What if my custom model only has dff + txd, how do I get the col?
+
+* Check this tutorial [here](sampobj/models/_TUTORIAL.md)
+
 ### Examples
 
 * This resource comes with a few **test maps** that contain custom models for you to see how it works
 * Check the `.pwn map files` and the `corresponding models` in the respective folders
 
-### What if my custom model only has dff + txd, how do I get the col?
-
-* Check this tutorial [here](sampobj/models/_TUTORIAL.md)
-
 ### Exported functions
 
-* `createSAMPObject(model_id,x,y,z,rx,ry,rz)` 
+* `CreateSAMPObject(model_id,x,y,z,rx,ry,rz)` 
     * note the model_id can be either SA default object or an id from SAMP
-* `setObjectMaterial(object,mat_index,model_id,lib_name,txd_name,color)`
+* `SetObjectMaterial(object,mat_index,model_id,lib_name,txd_name,color)`
     * assigns a default SA texture to an object's texture by material id
     * lib_name is currently ignored (not needed in MTA)
 * `AddSimpleModel(virtualworld, baseid, newid, dffname, txdname)`

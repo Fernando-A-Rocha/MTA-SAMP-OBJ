@@ -1,5 +1,5 @@
 
-function createSAMPObject(model_id,x,y,z,rx,ry,rz)
+function CreateSAMPObject(model_id,x,y,z,rx,ry,rz)
     if SAMPObjects[model_id] and SAMPObjects[model_id].malloc_id ~= nil then 
         --local lod = createObject(SAMPObjects[model_id].malloc_id,x,y,z,rx,ry,rz,true)
         local samp_obj = createObject(SAMPObjects[model_id].malloc_id,x,y,z,rx,ry,rz)

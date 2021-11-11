@@ -139,7 +139,7 @@ function loadTextureStudioMap(filename,int,dim)
                     local b = split(line,"=")
                     local model,x,y,z,rx,ry,rz,stream = parseCreateObject(b[2])
                     if model and (customModelFailed and customModelFailed ~= model) or (not customModelFailed) then
-                        Buffer.last_object = createSAMPObject(model,x,y,z,rx,ry,rz)
+                        Buffer.last_object = CreateSAMPObject(model,x,y,z,rx,ry,rz)
                         if isElement(Buffer.last_object) then
                             setElementInterior(Buffer.last_object,int)
                             setElementDimension(Buffer.last_object,dim)
@@ -150,7 +150,7 @@ function loadTextureStudioMap(filename,int,dim)
                 if isSetMaterial(line) then 
                     local index,model,lib,txd,color = parseSetObjectMaterial(line)
                     if isElement(Buffer.last_object) then 
-                        setObjectMaterial(Buffer.last_object,index,model,lib,txd,color)
+                        SetObjectMaterial(Buffer.last_object,index,model,lib,txd,color)
                     else
                         outputConsole(string.format("[OBJ_MAT]: Set %s on Error.",lib))
                     end

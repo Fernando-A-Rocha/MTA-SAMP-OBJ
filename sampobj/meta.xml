@@ -23,8 +23,8 @@
         <file src="files/samp.ide" />
 
     <!-- exported functions -->
-        <export function="createSAMPObject" type="client" />
-        <export function="setObjectMaterial" type="client" />
+        <export function="CreateSAMPObject" type="client" />
+        <export function="SetObjectMaterial" type="client" />
         <export function="AddSimpleModel" type="client" />
 
     <!-- samp models -->
