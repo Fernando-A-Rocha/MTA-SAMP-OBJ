@@ -37,8 +37,8 @@
 
 ### Where can I get TextureStudio to make SA-MP maps?
 
-* There will soon be an alternative to **TextureStudio** on MTA with better UI and controls (instead of the huge amount commands you need to know to use the SA-MP version)
-* It is true that MTA Map Editor never had way to replace a texture on an object with a certain GTA:SA texture
+* There will soon be an alternative to **TextureStudio** on MTA with better UI and controls (instead of the huge amount commands you need to know to use the SA-MP version, which make mapping quite inefficient)
+* It is true that MTA Map Editor never had a way to replace a texture on an object with a certain GTA:SA texture
 * This resource implements that, and I believe this feature can one day be available on the MTA Map Editor
 * But if you want, you can still download [SA-MP TextureStudio (v1.9c)](https://github.com/Crayder/Texture-Studio/releases/tag/v1.9c)
 
