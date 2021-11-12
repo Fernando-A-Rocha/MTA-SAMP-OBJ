@@ -18,8 +18,10 @@ function table.size ( tab )
     return length
 end
 
-function getSAMPIDEContent()
-	local f = fileOpen("files/samp.ide")
+function getSAMPIDE(file)
+	assert(type(file) == "string","Bad argument @'getSAMPIDE' expected a string at argument 1, got "..type(file))
+	assert(fileExists(file),"Bad argument @'getSAMPIDE' at argument 1, file "..file.." doesn't exist")
+	local f = fileOpen(file)
     local ide = fileRead(f,fileGetSize(f))
     fileClose(f)
     return ide
@@ -111,9 +113,9 @@ function genFileStream() -- credit by thisdp
 	}
 end
 
-function engineLoadIMGContainer(file)
-	assert(type(file) == "string","Bad argument @'engineLoadIMGContainer' at argument 1, expected a string got "..type(file))
-	assert(fileExists(file),"Bad argument @'engineLoadIMGContainer' at argument 1, file "..file.." doesn't exist")
+function getSAMPIMG(file)
+	assert(type(file) == "string","Bad argument @'getSAMPIMG' at argument 1, expected a string got "..type(file))
+	assert(fileExists(file),"Bad argument @'getSAMPIMG' at argument 1, file "..file.." doesn't exist")
 	local fs = genFileStream()
 	fs:loadFile(file)
 	local imgFile = {
@@ -170,13 +172,13 @@ local matchedCOLVer = {
 	COL2 = "COL2",
 	COL3 = "COL3",
 }
-function engineGetCOLsFromLibrary(file)
-	assert(type(file) == "string","Bad argument @'engineGetCOLsFromLibrary' expected a string at argument 1, got "..type(file))
+function getSAMPCOL(file)
+	assert(type(file) == "string","Bad argument @'getSAMPCOL' expected a string at argument 1, got "..type(file))
 	if fileExists(file) then	--COL Library
 		local f = fileOpen(file)
 		local str = fileRead(f,fileGetSize(f))
 		fileClose(f)
-		return engineGetCOLsFromLibrary(str)
+		return getSAMPCOL(str)
 	else
 		local cols = {}
 		while true do

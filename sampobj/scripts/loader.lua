@@ -11,19 +11,22 @@ Buffer = {
     curr_line = 0,
 }
 
--- checking the variables
+local img,cols,ide
+
+-- checking the variables (test print x)
 addCommandHandler("tp1", function() iprint(SAMPObjects) end, false)
 addCommandHandler("tp2", function() iprint(MTAIDMapSAMPModel) end, false)
 addCommandHandler("tp3", function() iprint(objects_load_list) end, false)
 addCommandHandler("tp4", function() iprint(loaded_maps) end, false)
+addCommandHandler("tp5", function() iprint(img) end, false)
+addCommandHandler("tp6", function() iprint(cols) end, false)
+addCommandHandler("tp7", function() iprint(ide) end, false)
 
 function loadSAMPObjects()
-    local img = engineLoadIMGContainer("files/samp.img") -- returns object
-    local cols = engineGetCOLsFromLibrary("samp/samp.col") -- returns array
-    local ide = getSAMPIDEContent() -- returns file content string
 
     Lines = split(ide,'\n' )
-    for i = 1, #Lines do
+    Async:iterate(1, #Lines, function(i)
+    -- for i=1, #Lines in pairs(parsed) do
         local s = split(Lines[i],",")
         if #s == 5 and not string.find(s[1], "#") then -- read ide lines
             local samp_modelid = tonumber(s[1])
@@ -67,7 +70,8 @@ function loadSAMPObjects()
                 end
             end
         end
-    end
+    -- end
+    end)
     return true
 end
 
@@ -198,7 +202,9 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
         end
     end
     Buffer.curr_filepath = filename
-    for _, v in pairs(parsed) do
+
+    Async:foreach(parsed, function(v)
+    -- for _, v in pairs(parsed) do
         Buffer.curr_line = v.line
 
         if v.f == "model" then
@@ -247,7 +253,8 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
                 })
             end
         end
-    end
+    -- end
+    end)
 
     Buffer.total = 0
     Buffer.last_object = nil
@@ -283,7 +290,8 @@ function unloadTextureStudioMap(mapid)
     local remaining_ids = {}
     
     
-    for k,v in pairs(loaded_maps[mapid].materials) do -- important cleanup
+    -- for k,v in pairs(loaded_maps[mapid].materials) do -- important cleanup
+    Async:foreach(loaded_maps[mapid].materials, function(v)
 
         local model = v.model
         if isSampObject(model) then
@@ -298,13 +306,18 @@ function unloadTextureStudioMap(mapid)
         end
 
         counts.materials = counts.materials + 1
-    end
-    for k,v in pairs(loaded_maps[mapid].models) do
+    -- end
+    end)
+
+    -- for k,v in pairs(loaded_maps[mapid].models) do
+    Async:foreach(loaded_maps[mapid].models, function(v)
         freeNewObject(v)
         counts.models = counts.models + 1
-    end
+    -- end
+    end)
 
-    for k,v in pairs(loaded_maps[mapid].objects) do
+    -- for k,v in pairs(loaded_maps[mapid].objects) do
+    Async:foreach(loaded_maps[mapid].objects, function(v)
         for j,w in pairs(v) do
             if isElement(w) then
                 local model = getSAMPOrDefaultModel(w)
@@ -316,15 +329,20 @@ function unloadTextureStudioMap(mapid)
                 counts.objects = counts.objects + 1
             end
         end
-    end
-    for k,v in pairs(loaded_maps[mapid].removals) do
+    -- end
+    end)
+
+    -- for k,v in pairs(loaded_maps[mapid].removals) do
+    Async:foreach(loaded_maps[mapid].removals, function(v)
         local model,radius,x,y,z,int = unpack(v)
         restoreWorldModel(model,radius,x,y,z,int)
         counts.removals = counts.removals + 1
-    end
+    -- end
+    end)
 
 
-    for id2,v in pairs(loaded_maps) do
+    -- for id2,v in pairs(loaded_maps) do
+    Async:foreach(loaded_maps, function(v, id2)
         if id2 ~= mapid then
             if v == "objects" then
                 local model = getSAMPOrDefaultModel(v[1])
@@ -334,13 +352,16 @@ function unloadTextureStudioMap(mapid)
                 end
             end
         end
-    end
+    -- end
+    end)
 
-    for id,_ in pairs(destroyed_obj_ids) do
+    -- for id,_ in pairs(destroyed_obj_ids) do
+    Async:foreach(destroyed_obj_ids, function(v, id)
         if not remaining_ids[id] then
             freeNewObject(id)
         end
-    end
+    -- end
+    end)
 
     outputDebugString("  Unloaded map "..mapid.." stats:")
     outputDebugString(counts.materials.."/"..icounts.materials.." materials cleaned", 0,255,255,255)
@@ -359,7 +380,7 @@ function unloadTextureStudioMap(mapid)
             break
         end
     end
-    
+
     outputDebugString("Map '"..mapname.."' (ID "..mapid..") unloaded")
 end
 addEvent("sampobj:unloadMap", true)
@@ -389,7 +410,6 @@ addEventHandler("sampobj:loadMap", resourceRoot, doLoadTextureStudioMap)
 function clientStartupLoad(objs, maps)
 
     for id, parsed in pairs(maps) do
-        
         if doLoadSAMPObjects(objs[id], id) then
 
             local int,dim
@@ -415,8 +435,42 @@ addEventHandler("sampobj:load", resourceRoot, clientStartupLoad)
 addEventHandler( "onClientResourceStart", resourceRoot, 
 function (startedResource)
 
+
+    img = getSAMPIMG("files/samp.img") -- returns object
+    if not img then
+        return outputFatalError("FATAL ERROR: Failed to load samp.img", 1)
+    end
+
+    cols = getSAMPCOL("files/samp.col") -- returns array
+    if not cols then
+        return outputFatalError("FATAL ERROR: Failed to load samp.col", 1)
+    end
+
+    ide = getSAMPIDE("files/samp.ide") -- returns file content string
+    if not ide then
+        return outputFatalError("FATAL ERROR: Failed to load samp.ide", 1)
+    end
+
+    -- Async loading
+    if ASYNC_DEBUG then
+        Async:setDebug(true);
+    end
+
+    -- Async:setPriority("low");    -- better fps
+    -- Async:setPriority("normal"); -- medium
+    Async:setPriority("high");   -- better perfomance
+
+    -- or, more advanced
+    -- Async:setPriority(500, 100);
+    -- 500ms is "sleeping" time, 
+    -- 100ms is "working" time, for every current async thread
+
+
     triggerLatentServerEvent("sampobj:request", resourceRoot)
-    -- togDrawObjects() -- enable on startup for testing
+
+    if TDO_AUTO then
+        togDrawObjects() -- enable on startup for testing
+    end
 end)
 
 

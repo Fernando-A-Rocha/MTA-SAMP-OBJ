@@ -1,19 +1,20 @@
 --[[
 	In this script you can enable debug messages for client or server side scripts.
 	Very useful when trying to find why your map didn't load the way you expected it.
-]]
 
---[[
+
 	This resource comes with the following default configuration:
+	
 	Clientside debug messages -> chatbox
 	Serverside debug messages -> debugbox
-	Allows you to distinguish both easily.
+
+	^ Allows you to distinguish both easily.
 ]]
 
 DEBUG = {
 	-- CLIENTSIDE
 	client_dbox = false, 	-- [true/false] print to client's debug box
-	client_chat = true, 	-- [true/false] print to chat
+	client_chat = false, 	-- [true/false] print to chat
 	
 	-- SERVERSIDE
 	server_dbox = true, 	-- [true/false] print to server's debug box
@@ -21,8 +22,22 @@ DEBUG = {
 }
 
 
----------------------------------------------------------------------------------------------------------
+-- Optional: enable /tdo automatically on startup
+TDO_AUTO = false
 
+-- Optional: enable async debug mode
+ASYNC_DEBUG = false
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------
 -- 	outputDebugString was rewritten to output to debug and/or chatbox at the same time, if you enabled it
 _outputDebugString = outputDebugString
 
@@ -79,5 +94,15 @@ else
 			text = leveltext.."#ffffff"..text
 			outputChatBox( text, root, r, g, b, true )
 		end
+	end
+end
+
+function outputFatalError(text)
+	local r,g,b = 255,0,0
+	_outputDebugString( text, 1, r, g, b )
+	if isElement(localPlayer) then
+		outputChatBox( text, r, g, b, true )
+	else
+		outputChatBox( text, root, r, g, b, true )
 	end
 end

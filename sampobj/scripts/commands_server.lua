@@ -9,8 +9,7 @@
 
 function gotoMapCommand(thePlayer, cmd, map_id)
     if not tonumber(map_id) then
-        outputChatBox("SYNTAX: /"..cmd.." [Map ID from mapList]", thePlayer,255,194,14)
-        return listMaps(cmd)
+        outputChatBox("SYNTAX: /"..cmd.." [Map ID from /listmaps]", thePlayer,255,194,14)
     end
     map_id = tonumber(map_id)
 
@@ -25,15 +24,14 @@ function gotoMapCommand(thePlayer, cmd, map_id)
         end
     end
     
-    outputChatBox("Map ID "..map_id.." not found", 255,0,0)
-    return listMaps(cmd)
+    outputChatBox("Map ID "..map_id.." not found, check /listmaps", 255,0,0)
 end
 addCommandHandler("gotomap", gotoMapCommand, false)
 
 
 function unloadMapCmd(thePlayer, cmd, map_id)
 	if not tonumber(map_id) then
-		return outputChatBox("SYNTAX: /"..cmd.." [Map ID from mapList]", thePlayer, 255,194,14)
+		return outputChatBox("SYNTAX: /"..cmd.." [Map ID from /listmaps]", thePlayer, 255,194,14)
 	end
 	map_id = tonumber(map_id)
 
@@ -51,7 +49,7 @@ addCommandHandler("unloadmap", unloadMapCmd, false, false)
 
 function loadMapCmd(thePlayer, cmd, map_id)
 	if not tonumber(map_id) then
-		return outputChatBox("SYNTAX: /"..cmd.." [Map ID from mapList]", thePlayer, 255,194,14)
+		return outputChatBox("SYNTAX: /"..cmd.." [Map ID from /listmaps]", thePlayer, 255,194,14)
 	end
 	map_id = tonumber(map_id)
 

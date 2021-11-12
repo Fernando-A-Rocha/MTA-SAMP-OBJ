@@ -1,12 +1,11 @@
 <meta>
     <!-- https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ -->
-    <info author="gta191977649, Fernando" description="samp object and map loader" version="1.1"/>
+    <info author="gta191977649, Fernando" description="samp object library and map loader" version="1.2"/>
 
-    <!-- https://nightly.mtasa.com -->
-    <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version>
+    <!-- CONFIGURATION HERE .................................................................. -->
 
     <!-- samp models -->
-        <!-- for test2 map -->
+        <!-- for 'office' map -->
         <file src="models/bigtire.dff"/>
         <file src="models/bigtire.txd"/>
         <file src="models/bigtire.col"/>
@@ -21,14 +20,19 @@
         <file src="models/wallclock.col"/>
 
     <!-- samp maps -->
-        <file src="maps/test.pwn"/>
-        <file src="maps/test2.pwn"/>
+        <file src="maps/mansion.pwn"/>
+        <file src="maps/office.pwn"/>
         <file src="maps/gunshop.pwn"/>
 
-    <!-- files -->
+
+    <!-- ..................................................................................... -->
+
+    <!-- utility files -->
         <file src="files/mta-helper.fx"/>
         <file src="files/shader.fx"/>
         <file src="files/mat_color.fx"/>
+
+    <!-- samp files -->
         <file src="files/samp.img" />
         <file src="files/samp.col" />
         <file src="files/samp.ide" />
@@ -47,4 +51,8 @@
         <script type="client" src="scripts/commands.lua"/>
         <script type="server" src="scripts/server.lua"/>
         <script type="server" src="scripts/commands_server.lua"/>
+
+    <!-- https://nightly.mtasa.com -->
+    <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version>
+
 </meta>
