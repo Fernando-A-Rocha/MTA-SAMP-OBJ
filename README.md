@@ -2,6 +2,8 @@
 
 ## Load your favourite SA-MP maps into MTA:SA
 
+## Please read everything - thank you 💖
+
 ### Credits
 
 * Original creator: [gta191977649](https://github.com/gta191977649)
@@ -18,9 +20,9 @@
 
 ### Before installing
 
-* **Minimum MTA versions** [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
-* ⚠️Client: `1.5.9-9.21026.0`
-* ⚠️Server: `1.5.9-9.21024.0`
+* **Minimum MTA versions** From: [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
+* ⚠️ Client: `1.5.9-9.21026.0`
+* ⚠️ Server: `1.5.9-9.21024.0`
 
 ### How to use
 
@@ -70,3 +72,8 @@
 * `Material Color` is not yet supported
 * `AddSimpleModel` doesn't support a SA-MP model as base ID
 * High memory usage: MTA currently donesn't support of server-side model allocation, they have to be allocated clientside, which takes up a lot of memory.
+
+
+### 🚀 Todo 🚀
+
+* Add more examples of possible implementations of the main functions
