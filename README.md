@@ -26,20 +26,20 @@
 ### How to install
 
 * Get the latest stable release: [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/releases/latest)
-* Create a `[samp]` folder in your server's resources, and place the downloaded `sampobj` resource folder inside
+* Place the `[samp]` folder in your server's resources
 
 ### How to use
 
-* Place map files in [sampobj/maps](sampobj/maps) and models in [sampobj/models](sampobj/models)
+* Place map files in [sampobj/maps](%5Bsamp%5D/sampobj/maps) and models in [sampobj/models](%5Bsamp%5D/sampobj/models)
 * List map files (**name.pwn**) in meta.xml under `<!-- samp maps -->`
 * And custom models (**dff + txd + col**) in meta.xml under `<!-- samp models -->`
-* Define **maps to load** in [maps/_maplist.lua](sampobj/maps/_maplist.lua)
-* Configure how you want to see debug messages in [scripts/_debug.lua](sampobj/scripts/_debug.lua)
+* Define **maps to load** in [maps/_maplist.lua](%5Bsamp%5D/sampobj/maps/_maplist.lua)
+* Configure how you want to see debug messages in [scripts/_debug.lua](%5Bsamp%5D/sampobj/scripts/_debug.lua)
 * Launch your server and `start sampobj` to initiate the resource
 
 ### What if my custom model only has dff + txd, how do I get the col?
 
-* Check this tutorial [here](sampobj/models/_TUTORIAL.md)
+* Check this tutorial [here](%5Bsamp%5D/sampobj/models/_TUTORIAL.md)
 
 ### Commands
 
