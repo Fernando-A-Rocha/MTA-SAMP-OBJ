@@ -191,6 +191,13 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
     int = int or 0
     dim = dim or 0
 
+    local filename = "?"
+    for k,map in pairs(mapList) do
+        if map.id == mapid then
+            filename = map.path
+            break
+        end
+    end
     Buffer.curr_filepath = filename
     for _, v in pairs(parsed) do
         Buffer.curr_line = v.line

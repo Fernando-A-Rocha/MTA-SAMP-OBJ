@@ -23,6 +23,7 @@
     <!-- samp maps -->
         <file src="maps/test.pwn"/>
         <file src="maps/test2.pwn"/>
+        <file src="maps/VICTIM.pwn"/>
 
 
     <!-- files -->

@@ -78,3 +78,4 @@
 ### 🚀 Todo 🚀
 
 * Add support for creating objects outside of the resource (exported functions; proper memory allocation), so that you can use it as a library and create your own scripts with `sampobj`
+* Add async loading to prevent huge freezes when loading a lot of objects

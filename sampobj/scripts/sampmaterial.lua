@@ -42,13 +42,16 @@ function getTextureNameFromIndex(object,mat_index)
 end
 function getTextureFromName(model_id,tex_name)
     if SAMPObjects[model_id] then -- if is samp model, we need to obtain the id allcated by the MTA
+        -- outputChatBox("samp "..model_id,255,194,14)
         model_id = SAMPObjects[model_id].malloc_id
     end
+
+    -- outputChatBox(model_id.." - "..tex_name)
     local txds = engineGetModelTextures(model_id,tex_name)
     for name,texture in pairs(txds) do
+        -- outputChatBox("pass", 0,255,0)
         return texture, name
     end
-    return nil
 end
 
 function getColor(color)
@@ -82,7 +85,7 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
                 destroyElement(matShader)
-                outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %d and tex_name: %s, file: %s, line: %d", model_id,tex_name, Buffer.curr_filepath, Buffer.curr_line), 1)
+                -- outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line), 2)
                 return false
             end
             engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
@@ -97,9 +100,8 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
 
             return { matShader, matTexture }
         else
-            local model = getSAMPOrDefaultModel(object)
-            -- outputChatBox(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 255,255,0)
-            outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %d, file: %s, line: %d", model,mat_index, Buffer.curr_filepath, Buffer.curr_line), 2)
+            -- local model = getSAMPOrDefaultModel(object)
+            -- outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line), 2)
             return false
         end
     end

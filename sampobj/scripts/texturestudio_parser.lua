@@ -60,9 +60,13 @@ function parseSetObjectMaterial(code)
     local model = tonumber(b[3])
     local lib = string.gsub(b[4], "\"", "")
     local txd = string.gsub(b[5], "\"", "")
-    local color = string.gsub(b[6], "%)", "")
-    color = string.gsub(color, "0x", "")
-    return matIndex,model,lib,txd,color
+    if lib == "none" or txd == "none" then
+        return nil -- ignore none, it's just to set color
+    end
+
+    -- local color = string.gsub(b[6], "%)", "") -- color ignored for now
+    -- color = string.gsub(color, "0x", "")
+    return matIndex,model,lib,txd--,color 
 end
 function parseRemoveBuildingForPlayer(code)
     code = string.gsub(code, "%(", "")
