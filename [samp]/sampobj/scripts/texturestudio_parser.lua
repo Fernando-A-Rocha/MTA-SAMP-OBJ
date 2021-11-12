@@ -132,8 +132,14 @@ function getTextureStudioMap(filename)
                     end
                 end
                 if isCreateObject(line) then
-                    local b = split(line,"=")
-                    local model,x,y,z,rx,ry,rz,dist = parseCreateObject(b[2])
+                    local objdetails = ""
+                    if string.find(line, "=") then -- has variable = createObject
+                        objdetails = split(line,"=")
+                        objdetails = objdetails[2] or ""
+                    else
+                        objdetails = line
+                    end
+                    local model,x,y,z,rx,ry,rz,dist = parseCreateObject(objdetails)
                     if model then
                         table.insert(result, {
                             f = "object",
