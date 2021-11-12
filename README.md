@@ -20,7 +20,8 @@
 
 ### ⚠️ Warning ⚠️
 
-* **Minimum MTA versions** From: [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
+* This resource is still rather experimental! Help is much appreciated
+* **Minimum MTA versions** (from [https://nightly.mtasa.com/](https://nightly.mtasa.com/))
 * Client: `1.5.9-9.21026.0`
 * Server: `1.5.9-9.21024.0`
 
@@ -78,6 +79,11 @@
 * `Material Color` is not yet supported
 * `AddSimpleModel` doesn't support a SA-MP model as base ID
 * High memory usage: MTA currently donesn't support of server-side model allocation, they have to be allocated clientside, which takes up a lot of memory.
+
+### Help & Bugs
+
+* If you need support, contact **Nando#7736** on Discord
+* Please report any bugs using **GitHub Issues**
 
 
 ### 🚀 Todo 🚀
