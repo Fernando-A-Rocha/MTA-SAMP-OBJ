@@ -2,7 +2,7 @@
 
 ## Load your favourite SA-MP maps into MTA:SA
 
-## Please read everything - thank you 💖
+### Please read everything - thank you 💖
 
 ### Credits
 
@@ -18,11 +18,12 @@
 * Many debug/error messages & comments to help you understand what's happening
 * Easily customizable & extendable
 
-### Before installing
+### Installing
 
 * **Minimum MTA versions** From: [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
 * ⚠️ Client: `1.5.9-9.21026.0`
 * ⚠️ Server: `1.5.9-9.21024.0`
+* You should clone this repository into `[samp]` in your server's resources, for example, so you can later keep up to date
 
 ### How to use
 
@@ -76,4 +77,4 @@
 
 ### 🚀 Todo 🚀
 
-* Add more examples of possible implementations of the main functions
+* Add support for creating objects outside of the resource (exported functions; proper memory allocation), so that you can use it as a library and create your own scripts with `sampobj`

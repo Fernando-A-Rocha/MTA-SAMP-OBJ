@@ -1,6 +1,6 @@
 <meta>
     <!-- https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ -->
-    <info author="gta191977649, Fernando" description="samp object and map loader"/>
+    <info author="gta191977649, Fernando" description="samp object and map loader" version="1.0"/>
 
     <!-- https://nightly.mtasa.com -->
     <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version>
@@ -47,9 +47,4 @@
         <script type="client" src="scripts/commands.lua"/>
         <script type="server" src="scripts/server.lua"/>
         <script type="server" src="scripts/commands_server.lua"/>
-
-    <!-- exported functions -->
-        <export function="CreateNewObject" type="client" />
-        <export function="SetObjectMaterial" type="client" />
-        <export function="AddSimpleModel" type="client" />
 </meta>
