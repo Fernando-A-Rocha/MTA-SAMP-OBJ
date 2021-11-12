@@ -34,7 +34,7 @@
 * List map files (**name.pwn**) in meta.xml under `<!-- samp maps -->`
 * And custom models (**dff + txd + col**) in meta.xml under `<!-- samp models -->`
 * Define **maps to load** in [maps/_maplist.lua](sampobj/maps/_maplist.lua)
-* Configure how you want to see debug messages in [scripts/_debug.lua](scripts/_debug.lua)
+* Configure how you want to see debug messages in [scripts/_debug.lua](sampobj/scripts/_debug.lua)
 * Launch your server and `start sampobj` to initiate the resource
 
 ### What if my custom model only has dff + txd, how do I get the col?
