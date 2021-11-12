@@ -41,12 +41,9 @@ function loadSAMPObjects()
                 end
             end
 
-            if not found then
-                -- outputChatBox("Skipping "..samp_modelid)
-            else
-
+            if found then
                 if SAMPObjects[samp_modelid] then
-                    -- outputChatBox("SAMP Obj "..samp_modelid.." already loaded")
+                    outputDebugString("SAMP Obj "..samp_modelid.." already loaded", 2)
                 else
 
                     local dff = string.gsub(s[2], '%s+', '')
@@ -62,10 +59,10 @@ function loadSAMPObjects()
 
                         local newid,reason = mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, nil, dff,txd)
                         if not tonumber(newid) then
-                            outputDebugString(string.format("[SAMP_OBJ] id failed to allocate for samp model %d, reason: %s", samp_modelid,reason), 1)
+                            outputDebugString(string.format("id failed to allocate for samp model %d, reason: %s", samp_modelid,reason), 1)
                         end
                     else
-                        outputDebugString(string.format("[SAMP_OBJ] dff %s failed to load",string.lower(dff)), 1)
+                        outputDebugString(string.format("dff %s failed to load",string.lower(dff)), 1)
                     end
                 end
             end
@@ -191,10 +188,12 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
     int = int or 0
     dim = dim or 0
 
-    local filename = "?"
+    local filename = ""
+    local mapname = ""
     for k,map in pairs(mapList) do
         if map.id == mapid then
             filename = map.path
+            mapname = map.name
             break
         end
     end
@@ -255,7 +254,7 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
     Buffer.curr_filepath = ""
     Buffer.curr_line = 0
 
-    print("Map "..mapid.." loaded")
+    outputDebugString("Map '"..mapname.."' (ID "..mapid..") loaded")
     return true
 end
 
@@ -343,16 +342,25 @@ function unloadTextureStudioMap(mapid)
         end
     end
 
-    outputChatBox("  Unloaded map "..mapid.." stats:")
-    outputChatBox(counts.materials.."/"..icounts.materials.." materials cleaned")
-    outputChatBox(counts.models.."/"..icounts.models.." models cleaned")
-    outputChatBox(counts.objects.."/"..icounts.objects.." objects cleaned")
-    outputChatBox(counts.removals.."/"..icounts.removals.." removals cleaned")
+    outputDebugString("  Unloaded map "..mapid.." stats:")
+    outputDebugString(counts.materials.."/"..icounts.materials.." materials cleaned", 0,255,255,255)
+    outputDebugString(counts.models.."/"..icounts.models.." models cleaned", 0,255,255,255)
+    outputDebugString(counts.objects.."/"..icounts.objects.." objects cleaned", 0,255,255,255)
+    outputDebugString(counts.removals.."/"..icounts.removals.." removals cleaned", 0,255,255,255)
 
     loaded_maps[mapid] = nil
     objects_load_list[mapid] = nil
 
-    print("Map "..mapid.." unloaded")
+
+    local mapname = ""
+    for k,map in pairs(mapList) do
+        if map.id == mapid then
+            mapname = map.name
+            break
+        end
+    end
+    
+    outputDebugString("Map '"..mapname.."' (ID "..mapid..") unloaded")
 end
 addEvent("sampobj:unloadMap", true)
 addEventHandler("sampobj:unloadMap", resourceRoot, unloadTextureStudioMap)

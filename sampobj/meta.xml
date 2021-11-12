@@ -34,6 +34,7 @@
         <file src="files/samp.ide" />
 
     <!-- scripts -->
+        <script type="shared" src="scripts/_debug.lua"/>
         <script type="shared" src="scripts/async.lua"/>
         <script type="shared" src="scripts/vendor.lua"/>
         <script type="shared" src="scripts/texturestudio_parser.lua"/>

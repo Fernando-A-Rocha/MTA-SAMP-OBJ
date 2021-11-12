@@ -21,11 +21,11 @@ function gotoMapCommand(thePlayer, cmd, map_id)
             setElementDimension(thePlayer, map.dim)
             setElementInterior(thePlayer, map.int)
             
-            return outputChatBox("Teleported to map #"..map_id.." named '"..map.name.."'", thePlayer,0,255,0)
+            return outputChatBox("Teleported to map ID "..map_id.." named '"..map.name.."'", thePlayer,0,255,0)
         end
     end
     
-    outputChatBox("Map #"..map_id.." not found", 255,0,0)
+    outputChatBox("Map ID "..map_id.." not found", 255,0,0)
     return listMaps(cmd)
 end
 addCommandHandler("gotomap", gotoMapCommand, false)
@@ -45,7 +45,7 @@ function unloadMapCmd(thePlayer, cmd, map_id)
         end
     end
 
-    outputChatBox("Map #"..map_id.." not found, check /listmaps", thePlayer, 255,0,0)
+    outputChatBox("Map ID "..map_id.." not found, check /listmaps", thePlayer, 255,0,0)
 end
 addCommandHandler("unloadmap", unloadMapCmd, false, false)
 
@@ -63,6 +63,6 @@ function loadMapCmd(thePlayer, cmd, map_id)
         end
     end
 
-    outputChatBox("Map #"..map_id.." not found, check /listmaps", thePlayer, 255,0,0)
+    outputChatBox("Map ID "..map_id.." not found, check /listmaps", thePlayer, 255,0,0)
 end
 addCommandHandler("loadmap", loadMapCmd, false, false)

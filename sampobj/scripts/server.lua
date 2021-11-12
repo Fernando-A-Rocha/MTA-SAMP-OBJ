@@ -79,7 +79,7 @@ function parseTextureStudioMaps()
 
 		local parsed, reason, objects_used = getTextureStudioMap(map.path)
 		if not (type(parsed)=="table") then
-			outputDebugString("Failed to parse map ID #"..map.id.." ('"..map.path.."'), reason: "..reason, 1)
+			outputDebugString("Failed to parse map ID "..map.id.." ('"..map.path.."'), reason: "..reason, 1)
 		else
 
 			-- objects IDs used by this map
@@ -154,7 +154,7 @@ addEvent("sampobj:request", true)
 function clientStartupRequest()
 
 	if (table.size(parsed_maps)) == 0 then
-		print(getPlayerName(client).." requested maps but none were loaded")
+		outputDebugString(getPlayerName(client).." requested maps but none were loaded", 2)
 		return
 	end
 

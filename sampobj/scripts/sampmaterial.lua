@@ -30,11 +30,13 @@ function getTextureNameFromIndex(object,mat_index)
         end
     end
 
-    -- debugging
+    
+    -- more in depth debugging (uncomment this)
+
     -- if not tex_name and SA_MATLIB[model..".dff"] then
-    --     outputChatBox((samp_info and ("(samp) "..samp_info.samp_id) or mta_id).." index "..mat_index.." not found, "..#(SA_MATLIB[model..".dff"]).." available:")
+    --     outputDebugString((samp_info and ("(samp) "..samp_info.samp_id) or mta_id).." index "..mat_index.." not found, "..#(SA_MATLIB[model..".dff"]).." available:")
     --     for k,val in pairs(SA_MATLIB[model..".dff"]) do
-    --         outputChatBox(val.index.." => "..val.name)
+    --         outputDebugString(val.index.." => "..val.name)
     --     end
     -- end
 
@@ -42,14 +44,11 @@ function getTextureNameFromIndex(object,mat_index)
 end
 function getTextureFromName(model_id,tex_name)
     if SAMPObjects[model_id] then -- if is samp model, we need to obtain the id allcated by the MTA
-        -- outputChatBox("samp "..model_id,255,194,14)
         model_id = SAMPObjects[model_id].malloc_id
     end
 
-    -- outputChatBox(model_id.." - "..tex_name)
     local txds = engineGetModelTextures(model_id,tex_name)
     for name,texture in pairs(txds) do
-        -- outputChatBox("pass", 0,255,0)
         return texture, name
     end
 end
@@ -85,8 +84,7 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
                 destroyElement(matShader)
-                -- outputChatBox(string.format( "[OBJ_MAT] Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line))
-                outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line), 2)
+                outputDebugString(string.format( "Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line), 2)
                 return false
             end
             engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
@@ -101,14 +99,9 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
 
             return { matShader, matTexture }
         else
-            -- if mat_index > 0 then
-            --     return SetObjectMaterial(object,mat_index-1,model_id,lib_name,tex_name,color)
-            -- else
-                local model = getSAMPOrDefaultModel(object)
-                -- outputChatBox(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line))
-                outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line), 2)
-                return false
-            -- end
+            local model = getSAMPOrDefaultModel(object)
+            outputDebugString(string.format( "Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line), 2)
+            return false
         end
     end
 end

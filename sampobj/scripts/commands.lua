@@ -23,8 +23,8 @@ addCommandHandler("tdo", togDrawObjects, false)
 function listMaps(cmd)
     outputChatBox("Total new objects loaded: "..countAllocatedModels(), 255,194,0)
     for k, map in pairs(mapList) do
-        local status = loaded_maps[map.id] and ("[LOADED "..(#(loaded_maps[map.id].objects).." obj]")) or "[NOT LOADED]"
-        outputChatBox(status.." (#"..map.id..") '"..map.name.."' int: "..map.int.." dim: "..map.dim, 255,126,0)
+        local status = loaded_maps[map.id] and ("#89ff6b[LOADED] #d1d1d1("..(#(loaded_maps[map.id].objects).." objects)")) or "#ff9c9c[NOT LOADED]"
+        outputChatBox(status.." #ffc67a(ID "..map.id..") #ffa126'"..map.name.."' #ffffffint: "..map.int.." dim: "..map.dim, 255,126,0, true)
     end
 end
 addCommandHandler("listmaps", listMaps, false)
