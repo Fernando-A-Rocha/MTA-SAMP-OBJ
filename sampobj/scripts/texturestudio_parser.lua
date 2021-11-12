@@ -6,8 +6,11 @@ end
 function string.contains(str,key) 
     return string.match(str, key) ~= nil
 end
-function isComment(line)
-    return string.match(line,"//") ~= nil
+function isComment(line) -- lazy temp solution
+    -- TODO know when a comment starts /* and then ends */
+    if string.match(line,"//") ~= nil then return false end
+    if string.match(line,"/*") ~= nil then return false end
+    return true
 end
 function isCreateObject(line)
     return string.contains(line,"CreateObject") or string.contains(line,"CreateDynamicObject")
@@ -32,6 +35,7 @@ function parseCreateObject(code)
     code = string.gsub(code, "%)", "")
     code = string.gsub(code, ";", "")
     code = string.gsub(code, "CreateObject", "")
+    code = string.gsub(code, "CreateDynamicObjectEx", "")
     code = string.gsub(code, "CreateDynamicObject", "")
     code = string.trim(code)
 

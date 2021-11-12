@@ -85,7 +85,8 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
                 destroyElement(matShader)
-                -- outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line), 2)
+                -- outputChatBox(string.format( "[OBJ_MAT] Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line))
+                outputDebugString(string.format( "[OBJ_MAT] Invalid texture name on model_id: %s and tex_name: %s, file: %s, line: %d", tostring(model_id),tostring(tex_name), Buffer.curr_filepath, Buffer.curr_line), 2)
                 return false
             end
             engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
@@ -100,9 +101,14 @@ function SetObjectMaterial(object,mat_index,model_id,lib_name,tex_name,color)
 
             return { matShader, matTexture }
         else
-            -- local model = getSAMPOrDefaultModel(object)
-            -- outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line), 2)
-            return false
+            -- if mat_index > 0 then
+            --     return SetObjectMaterial(object,mat_index-1,model_id,lib_name,tex_name,color)
+            -- else
+                local model = getSAMPOrDefaultModel(object)
+                -- outputChatBox(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line))
+                outputDebugString(string.format( "[OBJ_MAT] Unknown material on model: %s, index: %s, file: %s, line: %d", tostring(model),tostring(mat_index), Buffer.curr_filepath, Buffer.curr_line), 2)
+                return false
+            -- end
         end
     end
 end

@@ -112,7 +112,7 @@ end
 
 function loadMapForPlayers(map_id)
 	for _, map in pairs(mapList) do
-		if map.id == map_id and map.autoload == true then
+		if map.id == map_id then
 			for k, player in ipairs(getElementsByType("player")) do
 				triggerClientEvent(player, "sampobj:loadMap", resourceRoot, used_SAMP_objects[map_id], map_id, parsed_maps[map_id], map.int,map.dim)
 			end

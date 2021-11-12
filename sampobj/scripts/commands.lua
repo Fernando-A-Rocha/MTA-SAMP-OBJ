@@ -3,7 +3,6 @@
 
     - /tdo (test draw objects): displays object IDs and replaced textures with material indexes
     - /listmaps: lists all maps defined in maps/_maplist.lua
-    - /gotomap: teleports you to a certain map's defined TP position
 
 ]]
 
@@ -24,34 +23,11 @@ addCommandHandler("tdo", togDrawObjects, false)
 function listMaps(cmd)
     outputChatBox("Total new objects loaded: "..countAllocatedModels(), 255,194,0)
     for k, map in pairs(mapList) do
-        local status = loaded_maps[map.id] and "[LOADED]" or "[NOT LOADED]"
+        local status = loaded_maps[map.id] and ("[LOADED "..(#(loaded_maps[map.id].objects).." obj]")) or "[NOT LOADED]"
         outputChatBox(status.." (#"..map.id..") '"..map.name.."' int: "..map.int.." dim: "..map.dim, 255,126,0)
     end
 end
 addCommandHandler("listmaps", listMaps, false)
-
-function gotoMapCommand(cmd, map_id)
-    if not tonumber(map_id) then
-        outputChatBox("SYNTAX: /"..cmd.." [Map ID from mapList]", 255,194,14)
-        return listMaps(cmd)
-    end
-    map_id = tonumber(map_id)
-
-    for k, map in pairs(mapList) do
-        if map.id == map_id then
-
-            setElementPosition(getLocalPlayer(), unpack(map.pos))
-            setElementDimension(getLocalPlayer(), map.dim)
-            setElementInterior(getLocalPlayer(), map.int)
-            
-            return outputChatBox("Teleported to map #"..map_id.." named '"..map.name.."'", 0,255,0)
-        end
-    end
-    
-    outputChatBox("Map #"..map_id.." not found", 255,0,0)
-    return listMaps(cmd)
-end
-addCommandHandler("gotomap", gotoMapCommand, false)
 
 
 

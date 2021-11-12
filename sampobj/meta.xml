@@ -23,7 +23,7 @@
     <!-- samp maps -->
         <file src="maps/test.pwn"/>
         <file src="maps/test2.pwn"/>
-
+        <file src="maps/gunshop.pwn"/>
 
     <!-- files -->
         <file src="files/mta-helper.fx"/>
@@ -32,7 +32,6 @@
         <file src="files/samp.img" />
         <file src="files/samp.col" />
         <file src="files/samp.ide" />
-
 
     <!-- scripts -->
         <script type="shared" src="scripts/async.lua"/>

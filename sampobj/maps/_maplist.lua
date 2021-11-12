@@ -16,7 +16,7 @@
 
 mapList = {
     {
-    	autoload = true,
+    	autoload = false,
     	id = 1,
     	name = "Office",
     	path = "maps/test2.pwn",
@@ -32,5 +32,14 @@ mapList = {
     	int = 1,
     	dim = 3,
     	pos = { 1395.462891,-17.192383,1001 },
+	},
+    {
+    	autoload = false,
+    	id = 3,
+    	name = "gunshop",
+    	path = "maps/gunshop.pwn",
+    	int = 1,
+    	dim = 4,
+    	pos = { -729.7607421875, 1449.6337890625, -89.869453430176 },
 	},
 }
