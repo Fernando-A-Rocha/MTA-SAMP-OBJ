@@ -18,7 +18,9 @@
 
 ### Before installing
 
-* ⚠️ **Minimum MTA Client & Server version:** r21026 from [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
+* **Minimum MTA versions** [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
+* ⚠️Client: `1.5.9-9.21026.0`
+* ⚠️Server: `1.5.9-9.21024.0`
 
 ### How to use
 
