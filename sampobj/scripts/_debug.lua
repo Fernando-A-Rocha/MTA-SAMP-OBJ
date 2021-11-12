@@ -14,7 +14,7 @@
 DEBUG = {
 	-- CLIENTSIDE
 	client_dbox = false, 	-- [true/false] print to client's debug box
-	client_chat = false, 	-- [true/false] print to chat
+	client_chat = true, 	-- [true/false] print to chat
 	
 	-- SERVERSIDE
 	server_dbox = true, 	-- [true/false] print to server's debug box
