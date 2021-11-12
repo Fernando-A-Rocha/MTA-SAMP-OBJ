@@ -18,12 +18,17 @@
 * Many debug/error messages & comments to help you understand what's happening
 * Easily customizable & extendable
 
-### Installing
+### ⚠️ Warning ⚠️
 
 * **Minimum MTA versions** From: [https://nightly.mtasa.com/](https://nightly.mtasa.com/)
-* ⚠️ Client: `1.5.9-9.21026.0`
-* ⚠️ Server: `1.5.9-9.21024.0`
-* You should clone this repository into `[samp]` in your server's resources, for example, so you can later keep up to date
+* Client: `1.5.9-9.21026.0`
+* Server: `1.5.9-9.21024.0`
+
+### How to install
+
+* Get the latest stable release: [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/releases/latest)
+* Create a `[samp]` folder in your server's resources, and place the downloaded `sampobj` resource folder inside
+* Launch your server and `start sampobj` to initiate the resource
 
 ### How to use
 
