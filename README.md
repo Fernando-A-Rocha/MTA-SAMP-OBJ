@@ -21,13 +21,13 @@ Please read everything! Scroll down for contact info - thank you 💖
 ### ⚠️ Disclaimer ⚠️
 
 * This resource is still rather experimental (see below how you can help)
-* See all current `known issues` and `planned features/changes` in the **Issues** tab
+* See all current `known issues` and `planned features/changes` in the [Issues](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues) tab
 
 ## Install
 
 ### Prerequisites
 
-1. Check the current reported issues [here](/issues)
+1. Check the current reported issues [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)
 
     * It's important to see if this resource suits your needs
 
@@ -108,7 +108,7 @@ Please read everything! Scroll down for contact info - thank you 💖
 ## Help & Bugs
 
 * **For support contact** `Nando#7736` **on Discord**
-* Please report any bugs using **GitHub Issues**, and check for any already submitted bug reports
+* Please report any bugs using **GitHub Issues** ([here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)), and check for any already submitted bug reports
 * If you want to contribute you can fork this repository & submit PRs
 
 ## Miscellaneous
