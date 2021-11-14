@@ -94,16 +94,21 @@ Please read everything! Scroll down for contact info - thank you 💖
 
 ### Main Functions
 
-* `CreateNewObject(model_id,x,y,z,rx,ry,rz)` 
-    * model_id can be either default SA object or a SA-MP id
+* `CreateNewObject(model_id, x,y,z, rx,ry,rz)` 
+  * __returns an object element created somewhere__
+  * model_id can be either default SA object or a SA-MP id
 
-* `SetObjectMaterial(object,mat_index,model_id,lib_name,txd_name,color)`
-    * assigns a default SA texture to an object's texture by material id
-    * lib_name is currently ignored (MTA doesn't need it to find the texture)
+* `SetObjectMaterial(object, mat_index, model_id, txd_name, color)`
+  * __assigns a default SA texture to an object's texture by material id__
+  * color currently has no effect
+  * *lib_name in SA-MP function is ignored (not needed to find the texture)*
 
-* `AddSimpleModel(virtualworld, baseid, newid, dffname, txdname)`
-    * adds new objects by passing a base model id, the new samp id and the dff + txd names
-    * virtualworld is currently ignored (models will exist in every world)
+* `AddSimpleModel(baseid, newid, folderPath, fileDff, fileTxd [, fileCol ])`
+  * __adds a new object to the game identified by a new ID that you can then use in__ `CreateNewObject`
+  * folderPath is the path to the folder containing the models ([wiki info](https://wiki.multitheftauto.com/wiki/Filepath))
+  * fileDff, fileTxd and fileCol have to be file name + extension (example: chair.dff)
+  * fileCol is optional: when not passed it will assume dff name .col
+  * *virtualworld in SA-MP function is ignored (models will exist in every world)*
 
 ## Help & Bugs
 

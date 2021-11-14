@@ -126,7 +126,8 @@ function getTextureStudioMap(filename)
                             f = "model",
                             line = i,
                             variables = {
-                                virtualworld, baseid, newid, dffname, txdname
+                                -- virtualworld is useless
+                                baseid, newid, dffname, txdname
                             }
                         })
                     end
@@ -161,7 +162,8 @@ function getTextureStudioMap(filename)
                             f = "material",
                             line = i,
                             variables = {
-                                index,model,lib,txd,color
+                                --lib not needed
+                                index,model,txd,color
                             }
                         })
 

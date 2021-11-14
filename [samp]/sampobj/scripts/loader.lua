@@ -60,7 +60,7 @@ function loadSAMPObjects()
                     -- replace
                     if loadCol and loadDff and loadTxd then
 
-                        local newid,reason = mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, nil, dff,txd)
+                        local newid,reason = mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, nil, dff)
                         if not tonumber(newid) then
                             outputDebugString(string.format("id failed to allocate for samp model %d, reason: %s", samp_modelid,reason), 1)
                         end
@@ -76,7 +76,7 @@ function loadSAMPObjects()
 end
 
 
-function mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, baseid, dffName, txdName)
+function mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, baseid, dffName) --txdName
     -- malloc & replace object
 
     baseid = tonumber(baseid)
@@ -122,7 +122,9 @@ function mallocNewObject(loadTxd, loadDff, loadCol, samp_modelid, baseid, dffNam
     
     SAMPObjects[samp_modelid] = {
         malloc_id=id, samp_id=samp_modelid,
-        dff=string.lower(dffName),txd=string.lower(txdName),
+
+        -- used for looking up in SA_MATLIB
+        dff=string.lower(tostring(dffName)), --txd=string.lower(txdName),
         elements = {
             file_txd, file_dff, file_col -- destroy to free memory
         }
@@ -208,7 +210,8 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
         Buffer.curr_line = v.line
 
         if v.f == "model" then
-            local allocated_id = AddSimpleModel(unpack(v.variables))
+            local baseid, newid, dffname, txdname = unpack(v.variables)
+            local allocated_id = AddSimpleModel(baseid, newid, "models/", dffname, txdname)
             if allocated_id then
                 table.insert(loaded_maps[mapid].models, allocated_id)
             end
@@ -236,8 +239,8 @@ function loadTextureStudioMap(mapid,parsed,int,dim)
             end
         elseif v.f == "material" then
             if isElement(Buffer.last_object) then
-                local mat_index,model_id,lib_name,tex_name,color = unpack(v.variables)
-                local elements = SetObjectMaterial(Buffer.last_object, mat_index,model_id,lib_name,tex_name,color)
+                local mat_index,model_id,tex_name,color = unpack(v.variables)
+                local elements = SetObjectMaterial(Buffer.last_object, mat_index,model_id,tex_name,color)
                 if type(elements) == "table" then
                     table.insert(loaded_maps[mapid].materials, {
                         model = model_id,
