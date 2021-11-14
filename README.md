@@ -116,7 +116,7 @@ Please read everything! Scroll down for contact info - thank you 💖
 ### How do I get a collision file for my model (.dff)?
 
 * Check this tutorial [here](%5Bsamp%5D/sampobj/models/_TUTORIAL.md)
-* 
+
 ### Where can I get TextureStudio to make SA-MP maps?
 
 * There will soon be an alternative to **TextureStudio** on MTA with better UI and controls (instead of the huge amount commands you need to know to use the SA-MP version, which make mapping quite inefficient)
