@@ -164,6 +164,14 @@ See the comments in [new_objects/client.lua](%5Bsamp%5D/sampobj-examples/new_obj
   * __returns true__
   * same purpose as previous function but assigns an array of ids to a mapid directly
 
+* CLIENT: `loadSAMPObjects()` 
+  * __returns true__
+  * forces SAMP objects in `req_object_ids` to load
+
+* SHARED: `parseTextureStudioMap(filepath)` 
+  * __returns the parsed map content and list of new object IDs used or false if file doesn't exist__
+  * reads map Pawn code: recognises various functions and stores the calls in arrays
+
 ## Help & Bugs
 
 * **For support contact** `Nando#7736` **on Discord**
