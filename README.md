@@ -37,13 +37,13 @@ Please read everything! Scroll down for contact info - thank you 💖
 ### Disclaimer
 
 * This project is still under active development (see below how you can help)
-* See all current `known issues` and `planned features/changes` in the [Issues](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues) tab
+* See all current `known issues` and `planned features/changes` in the [Issues](https://github.com/Fernando-A-Rocha/mta-samp-obj/issues) tab
 
 ## Install
 
 ### Prerequisites
 
-1. Check the current open issues [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)
+1. Check the current open issues [here](https://github.com/Fernando-A-Rocha/mta-samp-obj/issues)
 
     * It's important to see if this resource suits your needs
     * ❗ `sampobj` currently won't work if `editor` (MTA:SA Map Editor) is running (Issue #6)
@@ -62,7 +62,7 @@ Please read everything! Scroll down for contact info - thank you 💖
 
 ### Installation
 
-1. Get the latest stable release: [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/releases/latest)
+1. Get the latest stable release: [here](https://github.com/Fernando-A-Rocha/mta-samp-obj/releases/latest)
 
 2. Unzip the source code and move the `[samp]` folder to your server's resources
 
@@ -175,7 +175,7 @@ See the comments in [new_objects/client.lua](%5Bsamp%5D/sampobj-examples/new_obj
 ## Help & Bugs
 
 * **For support contact** `Nando#7736` **on Discord**
-* Please report any bugs using **GitHub Issues** ([here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)), and check for any already submitted bug reports
+* Please report any bugs using **GitHub Issues** ([here](https://github.com/Fernando-A-Rocha/mta-samp-obj/issues)), and check for any already submitted bug reports
 * If you want to contribute you can fork this repository & submit PRs
 
 ## Miscellaneous
