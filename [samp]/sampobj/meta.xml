@@ -2,7 +2,7 @@
     <!-- DOCUMENTATION:
         https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ#readme
     -->
-    <info author="gta191977649, Fernando" description="SA-MP Object Libarry" version="2.1"/>
+    <info author="gta191977649, Fernando" description="SA-MP Object Library" version="2.1"/>
     <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version> <!-- https://nightly.mtasa.com -->
 
     <!-- utility files -->
