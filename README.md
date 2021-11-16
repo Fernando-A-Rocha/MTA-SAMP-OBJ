@@ -12,13 +12,13 @@ Please read everything! Scroll down for contact info - thank you 💖
 
 ### Introduction
 
-* Includes a library which lets you add SA-MP objects to the game in your MTA server
+* Includes `sampobj`: a library which lets you add SA-MP objects to the game in your MTA server
     * Reads samp.ide, samp.col and samp.img
     * Allocates new models to add SA-MP objects
     * Smart & optimized memory allocation
     * Many debug/error messages & comments to help you understand the code
 
-* Includes an example resource containing the following:
+* Includes `sampobj-examples`: an resource containing various implementations:
 
     * SA-MP Map Loader:
         * Loads native TextureStudio exported maps (reads Pawn code)
@@ -46,7 +46,7 @@ Please read everything! Scroll down for contact info - thank you 💖
 1. Check the current open issues [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)
 
     * It's important to see if this resource suits your needs
-    * ❗ `sampobj` currently won't work if `editor` (MTA:SA Map Editor) is running
+    * ❗ `sampobj` currently won't work if `editor` (MTA:SA Map Editor) is running (Issue #6)
 
 
 2. Make sure you have the right MTA client (game) version
