@@ -34,19 +34,19 @@ Please read everything! Scroll down for contact info - thank you 💖
 
 * Everything was developed to be easily extendable & customizable by you, so enjoy!
 
-### ⚠️ Disclaimer ⚠️
+### Disclaimer
 
-* This resource is still under active development (see below how you can help)
+* This project is still under active development (see below how you can help)
 * See all current `known issues` and `planned features/changes` in the [Issues](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues) tab
 
 ## Install
 
 ### Prerequisites
 
-1. Check the current reported issues [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)
+1. Check the current open issues [here](https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ/issues)
 
     * It's important to see if this resource suits your needs
-    * Important issue: `sampobj` currently won't work if `editor` (MTA:SA Map Editor) is running
+    * ❗ `sampobj` currently won't work if `editor` (MTA:SA Map Editor) is running
 
 
 2. Make sure you have the right MTA client (game) version
