@@ -18,7 +18,7 @@ Please read everything! Scroll down for contact info - thank you 💖
     * Smart & optimized memory allocation
     * Many debug/error messages & comments to help you understand the code
 
-* Includes `sampobj-examples`: an resource containing various implementations:
+* Includes `sampobj-examples`: a resource containing various implementations:
 
     * SA-MP Map Loader:
         * Loads native TextureStudio exported maps (reads Pawn code)

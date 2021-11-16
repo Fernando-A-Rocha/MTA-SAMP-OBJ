@@ -245,3 +245,10 @@ addEventHandler( "onClientResourceStart", resourceRoot,
 function (startedResource)
     triggerLatentServerEvent("samp_maps:request", resourceRoot)
 end)
+
+addEventHandler( "onClientResourceStop", resourceRoot, 
+function (startedResource)
+    for mapid,v in pairs(loaded_maps) do
+        unloadTextureStudioMap(mapid)
+    end
+end)

@@ -35,10 +35,8 @@ function AddSimpleModel(baseid, newid, folderPath, fileDff, fileTxd, fileCol) --
     local colpath = folderPath..fileCol
     assert(fileExists(colpath), "file not found: "..colpath)
 
-    if SAMPObjects[newid] then
-        local reason2 = "newid already allocated"
-        outputDebugMsg(string.format("failed to add object model: %d - %s, %s, %s, reason: %s",newid, fileDff,fileTxd,fileCol,reason2), 1)
-        return false
+    if SAMPObjects[newid] then -- already allocated
+        return SAMPObjects[newid].malloc_id
     end
 
     -- SAMP model as base id not supported
@@ -151,6 +149,11 @@ end
 function getTextureFromName(model_id,tex_name)
     if SAMPObjects[model_id] then -- if is samp model, we need to obtain the id allcated by the MTA
         model_id = SAMPObjects[model_id].malloc_id
+    else
+        if not isDefaultObject(model_id) then
+            -- prevent MTA error: engineGetModelTextures [Invalid model ID]
+            return
+        end
     end
 
     local txds = engineGetModelTextures(model_id,tex_name)
@@ -178,6 +181,7 @@ function SetObjectMaterial(object,mat_index,model_id,tex_name,color)  -- [Export
     if model_id ~= -1 then -- dealing replaced mat objects
         local target_tex_name = getTextureNameFromIndex(object,mat_index)
         if target_tex_name ~= nil then 
+
             -- find the txd name we want to replaced
             local matShader = dxCreateShader( "files/shader.fx" )
             local matTexture = getTextureFromName(model_id,tex_name)
@@ -190,7 +194,7 @@ function SetObjectMaterial(object,mat_index,model_id,tex_name,color)  -- [Export
                 dxSetShaderValue ( matShader, "gTexture", matTexture);
             else
                 destroyElement(matShader)
-                outputDebugMsg(string.format( "Invalid texture name on model_id: %s and tex_name: %s", tostring(model_id),tostring(tex_name)), 2)
+                outputDebugMsg(string.format( "Invalid texture/model on model_id: %s and tex_name: %s", tostring(model_id),tostring(tex_name)), 2)
                 return false
             end
             engineApplyShaderToWorldTexture (matShader,target_tex_name,object)
