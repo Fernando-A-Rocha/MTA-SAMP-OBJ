@@ -38,11 +38,9 @@ ASYNC_DEBUG = false
 
 
 ---------------------------------------------------------------------------------------------------------
--- 	outputDebugString was rewritten to output to debug and/or chatbox at the same time, if you enabled it
-_outputDebugString = outputDebugString
 
 if isElement(localPlayer) then
-	function outputDebugString( text, level, r, g, b )
+	function outputDebugMsg( text, level, r, g, b )
 		
 		level = tonumber(level) or 3
 		r = tonumber(r) or 255
@@ -50,7 +48,7 @@ if isElement(localPlayer) then
 		b = tonumber(b) or 255
 		
 		if DEBUG.client_dbox then
-			_outputDebugString( text, level, r, g, b )
+			outputDebugString( text, level, r, g, b )
 		end
 		if DEBUG.client_chat then
 			local leveltext = ""
@@ -69,7 +67,7 @@ if isElement(localPlayer) then
 		end
 	end
 else
-	function outputDebugString( text, level, r, g, b )
+	function outputDebugMsg( text, level, r, g, b )
 
 		level = tonumber(level) or 3
 		r = tonumber(r) or 255
@@ -77,7 +75,7 @@ else
 		b = tonumber(b) or 255
 		
 		if DEBUG.server_dbox then
-			_outputDebugString( text, level, r, g, b )
+			outputDebugString( text, level, r, g, b )
 		end
 		if DEBUG.server_chat then
 			local leveltext = ""
@@ -99,7 +97,9 @@ end
 
 function outputFatalError(text)
 	local r,g,b = 255,0,0
-	_outputDebugString( text, 1, r, g, b )
+	
+	outputDebugString( text, 1, r, g, b )
+
 	if isElement(localPlayer) then
 		outputChatBox( text, r, g, b, true )
 	else

@@ -1,31 +1,9 @@
 <meta>
-    <!-- https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ -->
-    <info author="gta191977649, Fernando" description="samp object library and map loader" version="1.3.1"/>
-
-    <!-- CONFIGURATION HERE .................................................................. -->
-
-    <!-- samp models -->
-        <!-- for 'office' map -->
-        <file src="models/bigtire.dff"/>
-        <file src="models/bigtire.txd"/>
-        <file src="models/bigtire.col"/>
-        <file src="models/celltoilet.dff"/>
-        <file src="models/celltoilet.txd"/>
-        <file src="models/celltoilet.col"/>
-        <file src="models/money.dff"/>
-        <file src="models/money.txd"/>
-        <file src="models/money.col"/>
-        <file src="models/wallclock.dff"/>
-        <file src="models/wallclock.txd"/>
-        <file src="models/wallclock.col"/>
-
-    <!-- samp maps -->
-        <file src="maps/mansion.pwn"/>
-        <file src="maps/office.pwn"/>
-        <file src="maps/gunshop.pwn"/>
-
-
-    <!-- ..................................................................................... -->
+    <!-- DOCUMENTATION:
+        https://github.com/Fernando-A-Rocha/MTA-SAMP-OBJ#readme
+    -->
+    <info author="gta191977649, Fernando" description="SA-MP Object Libarry" version="1.3.1"/>
+    <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version> <!-- https://nightly.mtasa.com -->
 
     <!-- utility files -->
         <file src="files/mta-helper.fx"/>
@@ -39,20 +17,26 @@
 
     <!-- scripts -->
         <script type="shared" src="scripts/_debug.lua"/>
-        <script type="shared" src="scripts/async.lua"/>
         <script type="shared" src="scripts/vendor.lua"/>
-        <script type="shared" src="scripts/texturestudio_parser.lua"/>
-        <script type="shared" src="maps/_maplist.lua"/>
+        <script type="shared" src="scripts/exported_functions.lua"/>
         <script type="client" src="scripts/loader.lua"/>
         <script type="client" src="scripts/matlist.lua"/>
-        <script type="client" src="scripts/sampobj.lua"/>
-        <script type="client" src="scripts/sampmaterial.lua"/>
-        <script type="client" src="scripts/sampmodel.lua"/>
-        <script type="client" src="scripts/commands.lua"/>
-        <script type="server" src="scripts/server.lua"/>
-        <script type="server" src="scripts/commands_server.lua"/>
 
-    <!-- https://nightly.mtasa.com -->
-    <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version>
+    <!-- exported functions -->
+
+        <!-- general -->
+        <export function="AddSimpleModel" type="client"/>
+        <export function="RemoveSimpleModel" type="client"/>
+        <export function="SetObjectMaterial" type="client"/>
+        <export function="CreateNewObject" type="client"/>
+
+        <!-- utility -->
+        <export function="isSAMPIDQueued" type="client"/>
+        <export function="queueSAMPID" type="client"/>
+        <export function="queueSAMPIDs" type="client"/>
+        <export function="loadSAMPObjects" type="client"/>
+
+        <!-- SAMP maps specific -->
+        <export function="parseTextureStudioMap" type="shared"/>
 
 </meta>

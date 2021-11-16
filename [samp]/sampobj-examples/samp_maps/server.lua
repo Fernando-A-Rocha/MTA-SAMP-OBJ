@@ -1,8 +1,98 @@
--- Fernando
+--[[
+	Author: Fernando
+	Script: samp_maps/client.lua
+	
+	Description:
+
+		Parses SA-MP maps in TextureStudio format (Pawn code) and sends them to client for loading
+
+	Commands (serverside):
+		- /gotomap: teleports you to a certain map's defined TP position
+		- /unloadmap: unloads a map by ID for every online player
+		- /loadmap: loads a map by ID for every online player
+]]
+
+-- Variables
 local SERVER_READY = false
 
 local used_SAMP_objects = {}
 local parsed_maps = {}
+
+
+--[[
+    List of commands (serverside):
+
+    
+
+]]
+
+function gotoMapCommand(thePlayer, cmd, map_id)
+	if not SERVER_READY then
+		return outputChatBox("Server not ready: still parsing maps.", thePlayer,255,0,0)
+	end
+    if not tonumber(map_id) then
+        outputChatBox("SYNTAX: /"..cmd.." [Map ID from /listmaps]", thePlayer,255,194,14)
+    end
+    map_id = tonumber(map_id)
+
+    for k, map in pairs(mapList) do
+        if map.id == map_id then
+
+            setElementPosition(thePlayer, unpack(map.pos))
+            setElementDimension(thePlayer, map.dim)
+            setElementInterior(thePlayer, map.int)
+            
+            return outputChatBox("Teleported to map ID "..map_id.." named '"..map.name.."'", thePlayer,0,255,0)
+        end
+    end
+    
+    outputChatBox("Map ID "..map_id.." not found, check /listmaps", 255,0,0)
+end
+addCommandHandler("gotomap", gotoMapCommand, false)
+
+
+function unloadMapCmd(thePlayer, cmd, map_id)
+	if not SERVER_READY then
+		return outputChatBox("Server not ready: still parsing maps.", thePlayer,255,0,0)
+	end
+	if not tonumber(map_id) then
+		return outputChatBox("SYNTAX: /"..cmd.." [Map ID from /listmaps]", thePlayer, 255,194,14)
+	end
+	map_id = tonumber(map_id)
+
+    for k, map in pairs(mapList) do
+        if map.id == map_id then
+
+			unloadMapForPlayers(map_id)
+            return
+        end
+    end
+
+    outputChatBox("Map ID "..map_id.." not found, check /listmaps", thePlayer, 255,0,0)
+end
+addCommandHandler("unloadmap", unloadMapCmd, false, false)
+
+function loadMapCmd(thePlayer, cmd, map_id)
+	if not SERVER_READY then
+		return outputChatBox("Server not ready: still parsing maps.", thePlayer,255,0,0)
+	end
+	if not tonumber(map_id) then
+		return outputChatBox("SYNTAX: /"..cmd.." [Map ID from /listmaps]", thePlayer, 255,194,14)
+	end
+	map_id = tonumber(map_id)
+
+    for k, map in pairs(mapList) do
+        if map.id == map_id then
+
+            loadMapForPlayers(map_id)
+            return
+        end
+    end
+
+    outputChatBox("Map ID "..map_id.." not found, check /listmaps", thePlayer, 255,0,0)
+end
+addCommandHandler("loadmap", loadMapCmd, false, false)
+
 
 function mapCheckError(text)
 	outputDebugString("mapList incorrect: "..text, 0, 255,120,0)
@@ -17,6 +107,10 @@ function mapChecks() -- check if the dev configured all variables correctly
 		if not tonumber(map.id) then
 			return false, mapCheckError("Invalid map ID '"..tostring(map.id).."'")
 		else
+			if map.id == 0 then
+				return false, mapCheckError("Invalid map ID '"..tostring(map.id).."', must be >0")
+			end
+
 			for k,id in pairs(used_ids) do
 				if id == map.id then
 					return false, mapCheckError("Duplicated map ID '"..id.."'")
@@ -77,7 +171,8 @@ function parseTextureStudioMaps()
 
 	for _, map in pairs(mapList) do
 
-		local parsed, reason, objects_used = getTextureStudioMap(map.path)
+		local path = ":"..resName.."/"..map.path
+		local parsed, reason, objects_used = lib:parseTextureStudioMap(path)
 		if not (type(parsed)=="table") then
 			outputDebugString("Failed to parse map ID "..map.id.." ('"..map.path.."'), reason: "..reason, 1)
 		else
@@ -106,7 +201,7 @@ end)
 
 function unloadMapForPlayers(map_id)
     for k, player in ipairs(getElementsByType("player")) do
-		triggerClientEvent(player, "sampobj:unloadMap", resourceRoot, map_id)
+		triggerClientEvent(player, "samp_maps:unloadMap", resourceRoot, map_id)
 	end
 end
 
@@ -114,7 +209,7 @@ function loadMapForPlayers(map_id)
 	for _, map in pairs(mapList) do
 		if map.id == map_id then
 			for k, player in ipairs(getElementsByType("player")) do
-				triggerClientEvent(player, "sampobj:loadMap", resourceRoot, used_SAMP_objects[map_id], map_id, parsed_maps[map_id], map.int,map.dim)
+				triggerClientEvent(player, "samp_maps:loadMap", resourceRoot, used_SAMP_objects[map_id], map_id, parsed_maps[map_id], map.int,map.dim)
 			end
 			return
 		end
@@ -144,13 +239,13 @@ function sendResultWhenReady(player)
             end
 		end
 
-		triggerLatentClientEvent(player, "sampobj:load", resourceRoot, objects, autoload_maps)
+		triggerLatentClientEvent(player, "samp_maps:loadAll", resourceRoot, objects, autoload_maps)
 	else
 		setTimer(sendResultWhenReady, 1000, 1, player)
 	end
 end
 
-addEvent("sampobj:request", true)
+addEvent("samp_maps:request", true)
 function clientStartupRequest()
 
 	if (table.size(parsed_maps)) == 0 then
@@ -160,4 +255,13 @@ function clientStartupRequest()
 
 	sendResultWhenReady(client)	
 end
-addEventHandler("sampobj:request", resourceRoot, clientStartupRequest)
+addEventHandler("samp_maps:request", resourceRoot, clientStartupRequest)
+
+
+function table.size ( tab )
+    local length = 0
+    for _ in pairs ( tab ) do
+        length = length + 1
+    end
+    return length
+end
