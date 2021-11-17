@@ -2,8 +2,10 @@
    <!-- DOCUMENTATION:
       https://github.com/Fernando-A-Rocha/mta-samp-obj#readme
    -->
-   <info author="Fernando" description="sampobj examples"/>
-    <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version> <!-- https://nightly.mtasa.com -->
+   <info author="Fernando" name="sampobj examples" description="-" type="script" version="0.0"/>
+
+   <min_mta_version client="1.5.9-9.21026.0" server="1.5.9-9.21024.0"></min_mta_version>
+   <!-- https://nightly.mtasa.com -->
    <include resource="sampobj"/>
    
    <!-- .................................................. RESOURCES .................................................. -->
