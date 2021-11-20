@@ -33,9 +33,9 @@ function loadSAMPObjects()
 
     Lines = split(ide,'\n' )
     Async:iterate(1, #Lines, function(i)
-    -- for i=1, #Lines in pairs(parsed) do
+    -- for i=1, #Lines do
         local s = split(Lines[i],",")
-        if #s == 5 and not string.find(s[1], "#") then -- read ide lines
+        if #s == 5 and not string.find(s[1], "#") then -- read ide line
             local samp_modelid = tonumber(s[1])
             if not samp_modelid then
                 return outputDebugMsg("ide read fail: '"..s[1].."'", 1)
